@@ -79,7 +79,7 @@ menuToggle.style.height = '40px'; // Match width for a square aspect
     fetchButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
             // Fetch the JSON file containing button-to-script mappings
-            fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/mainlist.json') 
+            fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/TheList.json') 
                 .then(response => response.json())
                 .then(data => {
                     const scriptUrl = data[index].scriptUrl; // Assume the JSON file has an array of scripts with a 'scriptUrl' field
