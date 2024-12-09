@@ -1,7 +1,7 @@
 [
-    { "label": "fetch1", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Battle/Damage%20Hack.js" },
-    { "label": "fetch2", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Battle/Fill%20Energy.js" },
-    { "label": "fetch3", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Battle/invincibilityHack.js" },
+    { "label": "fetch1", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Cookie%20Clicker%20Hacks/test.js" },
+    { "label": "fetch2", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Cookie%20Clicker%20Hacks/test.js" },
+    { "label": "fetch3", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Cookie%20Clicker%20Hacks/test.js" },
     { "label": "playerButton1", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Player/Edit%20Level.js" },
     { "label": "playerButton2", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Player/Free%20Membership.js" },
     { "label": "playerButton3", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Player/Get%20Gold.js" },
