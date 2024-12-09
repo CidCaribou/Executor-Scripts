@@ -8,5 +8,5 @@
     { "label": "fetch7", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/Cheats%20/upgrademultiplier.js" },
     { "label": "funButton1", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/Cheats%20/toggle_party_mode.js" },
     { "label": "funButton2", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/Cheats%20/kill_all_bugs.js" },
-    { "label": "funButton3", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/Cheats%20/autoclicker.js" }
+    { "label": "funButton3", "scriptUrl": "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Cookie%20Clicker%20Hacks/Cheats%20/set_bug_spawn_limit.js" }
 ]
