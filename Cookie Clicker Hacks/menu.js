@@ -41,7 +41,7 @@ menuToggle.style.height = '40px'; // Match width for a square aspect
             <div id="funUtilityButtons" style="display: none; margin-top: 10px;">
                 <button id="funButton1" style="margin: 5px; padding: 5px 10px; background: #6B3E1E; border: none; color: white; border-radius: 5px;">Toggle Party Mode</button>
                 <button id="funButton2" style="margin: 5px; padding: 5px 10px; background: #6B3E1E; border: none; color: white; border-radius: 5px;">Kill All Bugs</button>
-                <button id="funButton3" style="margin: 5px; padding: 5px 10px; background: #6B3E1E; border: none; color: white; border-radius: 5px;">Auto Clicker</button>
+                <button id="funButton3" style="margin: 5px; padding: 5px 10px; background: #6B3E1E; border: none; color: white; border-radius: 5px;">Set Bug Spawn Amount</button>
                 <!-- Add more buttons as needed -->
             </div>
             <button id="closeMenu" style="margin: 5px; padding: 5px 10px; background: #e74c3c; border: none; color: white; border-radius: 5px;">Close</button>
