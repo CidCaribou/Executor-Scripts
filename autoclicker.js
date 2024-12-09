@@ -1,4 +1,6 @@
 (function() {
+    alert("Made by WASD\n\nHold Left Click Down To Initiate The Auto-Clicker.\n\nMay Not Click Very Quickly Depending On Your Performance.");
+
     var clickerIsMouseDown = false;
     var clickerCurrentMouseTarget = document.body;
 
