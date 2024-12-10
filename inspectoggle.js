@@ -1,1 +1,7 @@
-if(document.body.contentEditable != 'true')void(document.body.contentEditable = 'true');else void(document.body.contentEditable = 'false');
+if (document.body.contentEditable !== 'true') {
+    document.body.contentEditable = 'true';
+    alert('ContentEditable is ON');
+} else {
+    document.body.contentEditable = 'false';
+    alert('ContentEditable is OFF');
+}
