@@ -1,3 +1,4 @@
+alert("May Not Work On Some WebSites\n\nLevel 2 Executor Required")
 document.body.innerHTML = ''; // Clear the document for demo purposes
 
 // Define the custom element for iframe bypass
