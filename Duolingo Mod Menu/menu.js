@@ -23,7 +23,7 @@ alert("You can get banned use at your own risk.\n\nMenu By Cid\n\nCheats Made by
                  alt="Duolingo Menu" 
                  draggable="false" 
                  style="width: 40px; height: 40px; cursor: pointer; margin-right: 10px;">
-            <h3 id="menuTitle" style="margin: 0; font-size: 16px;">Duolingo Menu</h3>
+            <h3 id="menuTitle" style="margin: 0; font-size: 16px;">Duolingo Cheat Menu</h3>
         </div>
         <div id="menuContent" style="margin-top: 10px;">
             <button id="categoryButton" style="margin: 5px; padding: 5px 10px; background: #006400; border: none; color: white; border-radius: 5px;">Category</button>
