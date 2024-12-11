@@ -1,0 +1,7 @@
+[
+    { "label": "playerButton1", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/Duolingo-Hacks@main/Answer%20Hack.js" },
+    { "label": "playerButton2", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/Duolingo-Hacks@main/Max%20All%20Skills.js" },
+    { "label": "playerButton3", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/Duolingo-Hacks@main/Plus%20Hack.js" },
+    { "label": "playerButton4", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/Duolingo-Hacks@main/Restore%20All%20Skills.js" },
+    { "label": "playerButton5", "scriptUrl": "https://cdn.jsdelivr.net/gh/rxzyx/Duolingo-Hacks@main/Unlock%20All%20Skills.js" },
+]
