@@ -63,7 +63,7 @@ alert("You can get banned use at your own risk.\n\nMenu By Cid\n\nCheats Made by
     const buttons = categoryButtons.querySelectorAll('button'); // Get the buttons within the category
     buttons.forEach((button, index) => {
         button.addEventListener('click', () => {
-            fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Duolingo%20Mod%20Menu/File.json')
+            fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Duolingo%20Mod%20Menu/File.json')
                 .then(response => response.json())
                 .then(data => {
                     const scriptUrl = data[index]?.scriptUrl;
