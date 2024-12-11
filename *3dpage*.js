@@ -11,9 +11,5 @@ if (!window.ThreeDit || !window.ThreeDit.initialized) {
         var c = { zDepth: 300, maxElems: 100, perspective: 500, initialized: false }; var d = []; var e = a; var f = b; var g; var h; var i; var j; var k; var l; var m; var n; var o; var p; var q; var r; var s; var t; var u; var v; var w; var x; var y; c.init = z; c.recollectElems = C; c.render = D; c.changePerspective = B; return c;
     }(window, document);
     ThreeDit.init(document);
-    alert("3D page is ON");
-} else {
-    // If the 3D effect is already active, disable it and show alert
-    ThreeDit.initialized = false;
-    alert("3D page is OFF");
+    alert("3D page is ON\n\nRefresh To Remove\n\nNOTE WILL REMOVE ALL SCRIPTS!");
 }
