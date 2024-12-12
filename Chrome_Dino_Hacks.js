@@ -1,5 +1,6 @@
+ alert("This Script Only Works On Chromedino.com")
 function script() {
-    var elem = document.getElementById('script');
+   var elem = document.getElementById('script');
     elem.parentNode.removeChild(elem);
     return false;
 }
