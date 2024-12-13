@@ -1,6 +1,4 @@
-// Prodigy Loader JavaScript Module
-
-// Create the loader container
+alert("Requires Spoofer V1")
 function createLoader() {
     const loader = document.createElement('div');
     loader.id = 'prodigy-loader';
@@ -71,17 +69,18 @@ function createLoader() {
         text-align: center;
     `;
 
-    const button1 = createButton('Prodigy Cheats Menu #1', () => {
-        alert('Running Code 1');
-        fetch('https://cdn.jsdelivr.net/gh/Blooket-Council/Blooket-Cheats@main/cheats/gui.js')
+    // Buttons
+    const button1 = createButton('Prodigy Cheat Menu', () => {
+        alert('Running Prodigy Cheat Menu');
+        fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Prodigy-menu@main/Menu.js')
             .then(response => response.text())
             .then(scriptText => eval(scriptText))
             .catch(error => console.error("Error fetching or executing script:", error));
     });
 
-    const button2 = createButton('Prodigy Cheats Menu #2', () => {
-        alert('Running Code 2');
-        fetch('https://cdn.jsdelivr.net/gh/Blooket-Council/Blooket-Cheats@main/cheats/gui.js')
+    const button2 = createButton('PXI-Fusion Menu', () => {
+        alert('Running PXI-Fusion');
+        fetch('https://cdn.jsdelivr.net/gh/DragonProdHax/PXI@main/PXI%20Fusion')
             .then(response => response.text())
             .then(scriptText => eval(scriptText))
             .catch(error => console.error("Error fetching or executing script:", error));
