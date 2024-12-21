@@ -1,71 +1,80 @@
 let isMouseDown = false;
 let isDragging = false;
-let wasClicked = false; // Track if it's just a click or drag
+let preventClick = false; // New flag to block toggle logic after dragging
 
 // Select the menu elements
 const menuToggle = document.querySelector('#input');
 const menu = document.querySelector('.switch');
-const menuContent = document.querySelector('.slider .sun-moon'); // Content or body of the menu
-const menuTitle = document.querySelector('.slider .stars'); // Or title element (adjust as needed)
-
-let startX, startY, offsetX, offsetY;
+let startX, startY;
 
 // Toggle Moon/Sun Logic
 menuToggle.addEventListener('click', (e) => {
-    // If dragging occurred, don't trigger the click
-    if (isDragging) {
-        e.preventDefault(); // Prevent toggle if dragging
+    // Prevent toggle if a drag occurred
+    if (preventClick) {
+        preventClick = false; // Reset the flag for next interaction
         return;
     }
 
-    // Handle the toggle logic if it's a click (not dragging)
-    if (menuToggle.checked) {
-        invertColors(); // Apply color inversion when moon is on
-    } else {
+    // Toggle the menu
+    if (menu.classList.contains('toggled')) {
+        menu.classList.remove('toggled');
         resetColors(); // Reset to normal colors when sun is on
+    } else {
+        menu.classList.add('toggled');
+        invertColors(); // Apply color inversion when moon is on
     }
-
-    wasClicked = false; // Reset the click flag
 });
 
 // Draggable Logic
 menu.addEventListener('mousedown', (e) => {
     isMouseDown = true;
-    wasClicked = true;  // Mark as clicked (for future checks)
-    e.preventDefault();  // Prevent accidental clicks while dragging
-
+    isDragging = false; // Reset dragging flag
+    preventClick = false; // Reset preventClick flag
     startX = e.clientX;
     startY = e.clientY;
-
-    const rect = menu.getBoundingClientRect();
-    offsetX = rect.left;
-    offsetY = rect.top;
 
     menu.style.cursor = 'grabbing';
 
     const onMouseMove = (e) => {
-        isDragging = true; // Mark that dragging has occurred
+        if (!isMouseDown) return;
+
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
 
-        menu.style.position = 'absolute'; // Ensure menu moves smoothly
-        menu.style.left = `${offsetX + dx}px`;
-        menu.style.top = `${offsetY + dy}px`;
+        // Detect significant movement as dragging
+        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+            isDragging = true;
+            preventClick = true; // Mark this interaction as a drag
+        }
 
-        wasClicked = false; // Reset click flag during drag
+        if (isDragging) {
+            // Move the menu
+            const rect = menu.getBoundingClientRect();
+            menu.style.position = 'absolute';
+            menu.style.left = `${rect.left + dx}px`;
+            menu.style.top = `${rect.top + dy}px`;
+            startX = e.clientX; // Update start coordinates
+            startY = e.clientY;
+        }
     };
 
     const onMouseUp = () => {
+        if (isDragging) {
+            // Dragging ended; block toggle logic
+            preventClick = true;
+        }
+
+        // Reset states
         isMouseDown = false;
-        isDragging = false; // Dragging has ended
+        isDragging = false;
         menu.style.cursor = 'grab';
 
-        // Remove mousemove and mouseup event listeners after dragging
+        // Remove event listeners
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
     };
 
-    // Listen for mousemove and mouseup events during dragging
+    // Listen for mousemove and mouseup events
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
 });
