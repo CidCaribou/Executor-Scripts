@@ -1,7 +1,7 @@
 .switch {
   position: absolute;
   top: 50px;  /* Distance from the top */
-  left: 50px; /* Distance from the right */
+  left: 50px; /* Distance from the left */
   width: 83px;
   height: 50px;
 }
@@ -38,15 +38,17 @@
   transition: 0.4s;
 }
 
-#input:checked + .slider {
-  background-color: black;
-}
-
+/* Removed :checked selector for background-color */
 #input:focus + .slider {
   box-shadow: 0 0 1px #2196f3;
 }
 
-#input:checked + .slider .sun-moon {
+/* Add class-based toggling */
+.switch.toggled .slider {
+  background-color: black;
+}
+
+.switch.toggled .slider .sun-moon {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -61,7 +63,8 @@
   fill: gray;
 }
 
-#input:checked + .slider .sun-moon .moon-dot {
+/* Add class-based toggling for moon dots */
+.switch.toggled .slider .sun-moon .moon-dot {
   opacity: 1;
 }
 
@@ -220,7 +223,7 @@
   animation-iteration-count: infinite;
 }
 
-#input:checked + .slider .stars {
+.switch.toggled .slider .stars {
   -webkit-transform: translateY(0);
   -ms-transform: translateY(0);
   transform: translateY(0);
