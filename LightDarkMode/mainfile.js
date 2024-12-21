@@ -13,7 +13,7 @@
         // Fetch HTML, CSS, and JS content
         const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/LightDarkMode/indexupdated.html');
         const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/LightDarkMode/styleupdated.css');
-        const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/LightDarkMode/script.js');
+        const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/script.js');
 
         // Inject the HTML content into the body
         const htmlContainer = document.createElement('div');
