@@ -10,7 +10,7 @@ if (newWindow) {
     newWindow.document.body.innerHTML = `
         <h1>Settings</h1>
         <p>Executor Level: 1</p>
-        <p>Version: 1</p>
+        <p>Version: 1.5</p>
         <p>User: Paid</p>
         <p>Credits: Menu By Wasd, Drawn On Website By Legend7269, Blooket Cheats By Glixzzy, Prodigy Menu By Wasd, Prodigy Cheats Made By rxzyx</p>
     `;
