@@ -12,9 +12,9 @@ javascript:(async function() {
 
     async function loadFiles() {
         // Fetch external HTML, CSS, and JS content
-        const htmlContent = await fetchFile('https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Revamped_Menu/Testupda.html');
-        const cssContent = await fetchFile('https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Revamped_Menu/Testup.css');
-        const jsContent = await fetchFile('https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Revamped_Menu/Revamp2.js');
+        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/index.html');
+        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/style.css');
+        const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/script.js');
 
         // Check if all files were successfully fetched
         if (!htmlContent || !cssContent || !jsContent) {
@@ -25,13 +25,12 @@ javascript:(async function() {
         // Create a floating UI container
         const uiElement = document.createElement('div');
         uiElement.style.position = 'fixed';
-        uiElement.style.top = '10px';
-        uiElement.style.right = '10px';
+        uiElement.style.top = '0px';
+        uiElement.style.right = '0px';
         uiElement.style.zIndex = '10000';
         uiElement.style.background = 'white';
         uiElement.style.border = '1px solid black';
-        uiElement.style.padding = '10px';
-        uiElement.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        uiElement.style.padding = '0px';
         document.body.appendChild(uiElement);
 
         // Inject the HTML content into the floating UI container
