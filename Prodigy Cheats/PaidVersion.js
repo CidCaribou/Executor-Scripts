@@ -14,9 +14,9 @@ alert("Requires Spoofer V1");
 
     async function loadFiles() {
         // Fetch external HTML, CSS, and JS content
-        const htmlContent = await fetchFile('https://raw.githubusercontent.com/CidCaribou/test/refs/heads/main/test/best.html');
-        const cssContent = await fetchFile('https://raw.githubusercontent.com/CidCaribou/test/refs/heads/main/test/best1.css');
-        const jsContent = await fetchFile('https://raw.githubusercontent.com/CidCaribou/test/refs/heads/main/test/best.js');
+        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Prodigy%20Cheats/Content/index.html');
+        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Prodigy%20Cheats/Content/style.css');
+        const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Prodigy%20Cheats/Content/script.js');
 
         // Check if all files were successfully fetched
         if (!htmlContent || !cssContent || !jsContent) {
