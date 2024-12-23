@@ -1,4 +1,4 @@
-javascript:(async function() {
+(async function() {
     async function fetchFile(filePath) {
         try {
             const response = await fetch(filePath);
@@ -11,13 +11,12 @@ javascript:(async function() {
     }
 
     async function loadFiles() {
-        // Fetch external HTML, CSS, and JS content
+        // Fetch external HTML and CSS content
         const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/index1.html');
         const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/style.css');
-        const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/script.js');
 
-        // Check if all files were successfully fetched
-        if (!htmlContent || !cssContent || !jsContent) {
+        // Check if both files were successfully fetched
+        if (!htmlContent || !cssContent) {
             console.error("Failed to load one or more files.");
             return;
         }
@@ -31,11 +30,6 @@ javascript:(async function() {
         const style = document.createElement('style');
         style.innerHTML = cssContent;
         document.head.appendChild(style);
-
-        // Inject the JS content into the document
-        const script = document.createElement('script');
-        script.innerHTML = jsContent;
-        document.body.appendChild(script);
     }
 
     // Call the loadFiles function
