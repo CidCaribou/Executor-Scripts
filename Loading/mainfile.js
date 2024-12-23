@@ -12,7 +12,7 @@ javascript:(async function() {
 
     async function loadFiles() {
         // Fetch external HTML, CSS, and JS content
-        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/index.html');
+        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/index1.html');
         const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/style.css');
         const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/script.js');
 
