@@ -21,7 +21,7 @@
             return;
         }
 
-        // Inject the HTML content directly into the document body
+       
         const htmlContainer = document.createElement('div');
         htmlContainer.innerHTML = htmlContent;
         document.body.appendChild(htmlContainer);
