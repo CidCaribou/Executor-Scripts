@@ -11,12 +11,13 @@ javascript:(async function() {
     }
 
     async function loadFiles() {
-        // Fetch external HTML and CSS content
-        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/index.html');
-        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/style.css');
+        // Fetch external HTML, CSS, and JS content
+        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/index.html');
+        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/style.css');
+        const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/script.js');
 
-        // Check if both files were successfully fetched
-        if (!htmlContent || !cssContent) {
+        // Check if all files were successfully fetched
+        if (!htmlContent || !cssContent || !jsContent) {
             console.error("Failed to load one or more files.");
             return;
         }
@@ -30,6 +31,11 @@ javascript:(async function() {
         const style = document.createElement('style');
         style.innerHTML = cssContent;
         document.head.appendChild(style);
+
+        // Inject the JS content into the document
+        const script = document.createElement('script');
+        script.innerHTML = jsContent;
+        document.body.appendChild(script);
     }
 
     // Call the loadFiles function
