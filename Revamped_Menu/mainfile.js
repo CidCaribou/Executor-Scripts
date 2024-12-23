@@ -1,4 +1,4 @@
-javascript:(async function() {
+(async function() {
     async function fetchFile(filePath) {
         try {
             const response = await fetch(filePath);
