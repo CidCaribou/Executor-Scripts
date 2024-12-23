@@ -1,3 +1,9 @@
+ const link = document.createElement('link');
+        link.setAttribute('rel', 'stylesheet');
+        link.setAttribute('type', 'text/css');
+        link.setAttribute('href', 'https://fonts.googleapis.com/css?family=Nunito:400,700|Titan+One|Creepster|Satisfy|Eczar:700');
+        document.head.appendChild(link);
+
 const body = document.querySelector('body');
 const sidebar = body.querySelector('nav');
 const toggle = body.querySelector('.toggle');
