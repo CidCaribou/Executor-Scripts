@@ -54,8 +54,22 @@ body.dark{
     z-index: 100;  
 }
 .sidebar.close{
-    width: 88px;
+    width: 1px;
+   transform: translateX(-100%);
+
 }
+
+.Minimize.Arrow {
+    position: absolute; 
+    top: 0px;           
+    right: -9px;       
+    font-size: 100px;   
+    height: 35px;      
+    width: 35px;        
+    line-height: 100px;  
+}
+
+
 
 /* ===== Reusable code - Here ===== */
 .sidebar li{
@@ -97,6 +111,11 @@ body.dark{
 .sidebar.close .text{
     opacity: 0;
 }
+.sidebar.close .image img {
+    opacity: 0; /* Makes the icon fully transparent */
+    transition: opacity 0.3s ease; /* Optional: adds smooth transition */
+}
+
 /* =========================== */
 
 .sidebar header{
