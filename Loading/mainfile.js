@@ -12,8 +12,8 @@ javascript:(async function() {
 
     async function loadFiles() {
         // Fetch external HTML and CSS content
-        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/index.html');
-        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Revamped_Menu/style.css');
+        const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/index.html');
+        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Loading/style.css');
 
         // Check if both files were successfully fetched
         if (!htmlContent || !cssContent) {
