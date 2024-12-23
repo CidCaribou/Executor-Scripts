@@ -96,10 +96,6 @@ function loadSubButtons(category) {
         action: () => fetch('https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Player/Unlock%20Items.js')
     .then(response => response.text())  
     .then(scriptText => eval(scriptText)) },
-       { text: "WalkAnywhere", icon: "bx bx-user", 
-        action: () => fetch('https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Player/WalkAnywhere.js')
-    .then(response => response.text())  
-    .then(scriptText => eval(scriptText)) },
        { text: "WalkSpeed", icon: "bx bx-user", 
         action: () => fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Prodigy-menu@refs/heads/main/Menu%20Advanced/set_walk_speed.js')
     .then(response => response.text())  
@@ -167,6 +163,10 @@ function loadSubButtons(category) {
     .then(scriptText => eval(scriptText)) },
         { text: "Kick Players", icon: "bx bxs-wrench", 
     action: () => fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Prodigy-menu@refs/heads/main/Menu%20Advanced/kick_player.js')
+    .then(response => response.text())  
+    .then(scriptText => eval(scriptText)) },
+        { text: "Walk Anywhere", icon: "bx bxs-wrench", 
+        action: () => fetch('https://cdn.jsdelivr.net/gh/rxzyx/prodigy-hack@refs/heads/main/Player/WalkAnywhere.js')
     .then(response => response.text())  
     .then(scriptText => eval(scriptText)) },
    { text: "Bobbified", icon: "bx bxs-wrench", 
