@@ -76,7 +76,7 @@ const loadHTMLContent = async (url) => {
     }
     const htmlContent = await response.text();
     iframe.srcdoc = htmlContent;
-    title.textContent = 'MineCraft (Offline)';
+    title.textContent = 'Slope';
   } catch (error) {
     alert('Error loading Game:', error);
     title.textContent = 'Error Loading Game';
