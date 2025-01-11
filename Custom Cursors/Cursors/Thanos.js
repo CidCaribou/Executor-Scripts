@@ -2,7 +2,7 @@
 
   const normalCursorUrl = "https://cdn.custom-cursor.com/db/pointer/32/Infinity_Gauntlet_Pointer.png"; 
   const pointerCursorUrl = "https://cdn.custom-cursor.com/db/cursor/32/Infinity_Gauntlet_Cursor.png"; 
-  const textCursorUrl = "https://example.com/text-cursor.png"; 
+  const textCursorUrl = "https://cdn.custom-cursor.com/db/cursor/32/Infinity_Gauntlet_Cursor.png"; 
 
   function applyCustomCursors() {
 
