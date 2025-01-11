@@ -1,7 +1,7 @@
 .switch {
   position: absolute;
-  top: 50px;  /* Distance from the top */
-  left: 50px; /* Distance from the left */
+  top: 500px;  
+  left: 1000px; 
   width: 83px;
   height: 50px;
 }
@@ -38,12 +38,10 @@
   transition: 0.4s;
 }
 
-/* Removed :checked selector for background-color */
 #input:focus + .slider {
   box-shadow: 0 0 1px #2196f3;
 }
 
-/* Add class-based toggling */
 .switch.toggled .slider {
   background-color: black;
 }
@@ -63,7 +61,6 @@
   fill: gray;
 }
 
-/* Add class-based toggling for moon dots */
 .switch.toggled .slider .sun-moon .moon-dot {
   opacity: 1;
 }
