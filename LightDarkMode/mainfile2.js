@@ -12,7 +12,7 @@
     async function loadFiles() {
 
         const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/index.html');
-        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/style.css');
+        const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/style1.css');
         const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/script.js');
 
         const htmlContainer = document.createElement('div');
