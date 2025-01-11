@@ -10,25 +10,22 @@
     }
 
     async function loadFiles() {
-        // Fetch HTML, CSS, and JS content
+
         const htmlContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/index.html');
         const cssContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/style.css');
         const jsContent = await fetchFile('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/LightDarkMode/script.js');
 
-        // Inject the HTML content into the body
         const htmlContainer = document.createElement('div');
         htmlContainer.innerHTML = htmlContent;
-        document.body.appendChild(htmlContainer); // Append the HTML to the body
+        document.body.appendChild(htmlContainer); 
 
-        // Inject the CSS content into the head
         const style = document.createElement('style');
         style.innerHTML = cssContent;
-        document.head.appendChild(style); // Append the CSS to the head
+        document.head.appendChild(style); 
 
-        // Inject the JS content into the body
         const script = document.createElement('script');
-        script.textContent = jsContent;  // Use textContent instead of innerHTML
-        document.body.appendChild(script); // Append the JS to the body
+        script.textContent = jsContent;  
+        document.body.appendChild(script); 
     }
 
     loadFiles();
