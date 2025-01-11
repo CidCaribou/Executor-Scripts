@@ -1,8 +1,8 @@
 (function () {
 
-  const normalCursorUrl = "https://cdn.custom-cursor.com/db/pointer/32/Infinity_Gauntlet_Pointer.png"; 
-  const pointerCursorUrl = "https://cdn.custom-cursor.com/db/cursor/32/Infinity_Gauntlet_Cursor.png"; 
-  const textCursorUrl = "https://cdn.custom-cursor.com/db/cursor/32/Infinity_Gauntlet_Cursor.png"; 
+  const normalCursorUrl = "https://cdn.custom-cursor.com/db/cursor/32/TikTok_Cursor.png"; 
+  const pointerCursorUrl = "https://cdn.custom-cursor.com/db/pointer/32/TikTok_Pointer.png"; 
+  const textCursorUrl = "https://cdn.custom-cursor.com/db/pointer/32/TikTok_Pointer.png"; 
 
   function applyCustomCursors() {
 
