@@ -143,7 +143,8 @@ const clickEffects = [
   },
 ];
 
-document.body.style.cssText = `
+const styleTag = document.createElement('style');
+styleTag.textContent = `
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -299,10 +300,21 @@ const macButtons = [
         menuContainer.style.overflow = 'hidden';
       } else {
         menuContainer.style.height = '570px'; 
-        menuContainer.style.overflow = 'visible'; 
+        menuContainer.style.overflow = 'visible';  
       }
     } },
-  { color: '#28C940', label: 'Fullscreen', action: () => menuContainer.requestFullscreen() },
+  {
+  color: '#28C940', 
+  label: 'Fullscreen', 
+  action: () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      menuContainer.requestFullscreen();
+    }
+  }
+}
+
 ];
 
 macButtons.forEach(({ color, label, action }) => {
@@ -365,8 +377,8 @@ searchBar.placeholder = 'Search...';
 searchBar.style.cssText = `
   width: calc(100% - 32px);
   padding: 8px;
-  margin: 0px 7px;
-  border-radius: 4px;
+  margin: 1px 7px;
+  border-radius: 6px;
   border: 1px solid #444;
   background: #333;
   color: #fff;
@@ -395,7 +407,7 @@ Object.values(contentContainers).forEach((container) => {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     transition: all 0.3s ease;
-     overflow-y: hidden; 
+    overflow-y: hidden; 
     padding: 8px; 
     margin-top: 16px; /* Optional: Add spacing between the top bar and scrollable content */
   `;
@@ -461,28 +473,68 @@ const populateContent = (category) => {
       cursor: pointer;
       transition: background 0.3s; 
     `;
-    button.onmouseover = () => (button.style.background = '#444');
+    button.onmouseover = () => (button.style.background = '#444');  
+    
     button.onmouseout = () => (button.style.background = '#000');
-    button.onclick = () => {
-      if (equippedItems[category]) {
-        equippedItems[category].button.textContent = 'Equip';
+    
+button.onclick = () => {
+
+  if (equippedItems[category]) {
+    
+   
+    if (equippedItems[category].button === button) {
+      button.textContent = 'Equip';
+      
+      equippedItems[category] = null;
+      
+      // Fetch and execute the script if the category is 'cursor'
+      if (category === 'cursors') {
+        showAlert('warning', 'Loading...');
+        fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Custom%20Cursors/Cursors/default_cursor.js')
+          .then(response => response.text())
+          .then(scriptText => {
+           eval(scriptText);
+            showAlert('warning', 'Cursor unequipped successfully!');
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            showAlert('error', 'There was an issue unequipping the cursor');
+          });
       }
-      button.textContent = 'Equipped';
-      equippedItems[category] = { button, fetchUrl };
+      return;
+    }
+  }
 
-      fetch(fetchUrl)
-        .then(response => response.text())
-        .then(code => {
-          eval(code); 
-          console.log('Code executed successfully');
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    };
+  button.textContent = 'Unequip';
+  equippedItems[category] = { button, fetchUrl };
 
+  showAlert('warning', 'Loading...');
+  fetch(fetchUrl)
+    .then(response => response.text())
+    .then(code => {
+      eval(code);
+      showAlert('success', 'Cursor Equipped Successfully!');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      showAlert('error', 'There Was An Issue Equipping The Cursor');
+    });
+};
+    
+    function showAlert(icon, message) {
+  Swal.fire({
+    toast: true,
+    position: 'bottom',
+    icon: icon,
+    title: message,
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+  });
+}
+ 
     if (equippedItems[category] && equippedItems[category].fetchUrl === fetchUrl) {
-      button.textContent = 'Equipped';
+      button.textContent = 'Unequip';
       equippedItems[category].button = button;
     }
 
