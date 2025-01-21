@@ -83,7 +83,7 @@ const loadHTMLContent = async (url) => {
   }
 };
 
-const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Games%20/MineCraft_(Offline)/Minecraft_(Offlline).html';
+const htmlFileURL = 'https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Google%20Snake%20Unblocked/gsm.html';
 loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
