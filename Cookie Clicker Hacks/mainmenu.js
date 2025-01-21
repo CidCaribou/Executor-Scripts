@@ -102,6 +102,35 @@ menuToggle.style.height = '40px'; // Match width for a square aspect
                 });
         });
     });
+  
+
+Game.OpenSesame();
+
+// Function to hide the elements by their IDs
+function hideElements() {
+    // Hide the FPS counter element
+    const fpsCounter = document.getElementById('fpsCounter');
+    if (fpsCounter) {
+        fpsCounter.style.display = 'none';
+    }
+
+    // Hide the FPS graph element (canvas)
+    const fpsGraph = document.getElementById('fpsGraph');
+    if (fpsGraph) {
+        fpsGraph.style.display = 'none';
+    }
+}
+
+// Check for the elements periodically to make sure they're hidden after the game starts
+const intervalId = setInterval(() => {
+    if (document.getElementById('fpsCounter') || document.getElementById('fpsGraph')) {
+        hideElements();
+    } else {
+        // Stop checking if the elements are already hidden
+        clearInterval(intervalId);
+    }
+}, 100);  // Check every 100ms
+
   // Draggable Menu Logic
     const header = document.getElementById('menuHeader');
     let startX, startY, offsetX, offsetY;
