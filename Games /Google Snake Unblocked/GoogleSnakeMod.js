@@ -83,7 +83,7 @@ const loadHTMLContent = async (url) => {
   }
 };
 
-const htmlFileURL = 'https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Google%20Snake%20Unblocked/gsm.html';
+const htmlFileURL = 'https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Google%20Snake%20Unblocked/gsm1.html';
 loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
