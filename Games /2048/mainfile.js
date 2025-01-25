@@ -19,6 +19,7 @@ header.style.display = 'flex';
 header.style.alignItems = 'center';
 header.style.padding = '0 10px';
 header.style.cursor = 'grab';
+header.style.color = 'black'; 
 header.style.borderBottom = '1px solid #ddd';
 
 const closeBtn = document.createElement('div');
@@ -53,6 +54,7 @@ title.textContent = 'Loading Game...';
 title.style.marginLeft = '10px';
 title.style.fontSize = '14px';
 title.style.fontWeight = 'bold';
+title.style.color = 'black'; 
 
 header.appendChild(closeBtn);
 header.appendChild(minimizeBtn);
@@ -76,7 +78,7 @@ const loadHTMLContent = async (url) => {
     }
     const htmlContent = await response.text();
     iframe.srcdoc = htmlContent;
-    title.textContent = 'MineCraft (Offline)';
+    title.textContent = '2048';
   } catch (error) {
     alert('Error loading Game:', error);
     title.textContent = 'Error Loading Game';
