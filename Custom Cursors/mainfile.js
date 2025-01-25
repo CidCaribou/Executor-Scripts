@@ -152,8 +152,12 @@ styleTag.textContent = `
   justify-content: center;
   align-items: center;
   height: 100vh;
-  overflow: hidden; /* Prevent outer scrollbar */
+  overflow: hidden; 
 `;
+
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
 
 const menuContainer = document.createElement('div');
 menuContainer.style.cssText = `
@@ -170,16 +174,29 @@ menuContainer.style.cssText = `
   transition: height 0.3s ease; 
   display: flex;
   flex-direction: column;
-  color: white; /* Make text white */
+  color: white; 
 `;
 
-let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
+const header = document.createElement('div');
+header.style.cssText = `
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #444;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+`;
+header.className = 'header-class';
 
-menuContainer.addEventListener('mousedown', (e) => {
+menuContainer.appendChild(header);
+
+document.body.appendChild(menuContainer);
+
+const headerElement = document.querySelector('.header-class'); 
+
+headerElement.addEventListener('mousedown', (e) => {
   if (e.target.closest('.mac-buttons')) return;
-  if (e.target.closest('buttons')) return; 
   isDragging = true;
   offsetX = e.clientX - menuContainer.offsetLeft;
   offsetY = e.clientY - menuContainer.offsetTop;
@@ -195,19 +212,6 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
   isDragging = false;
 });
-
-document.body.appendChild(menuContainer);
-
-const header = document.createElement('div');
-header.style.cssText = `
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #444;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-  flex-shrink: 0;
-`;
 
 const navContainer = document.createElement('div');
 navContainer.style.cssText = `
@@ -333,7 +337,6 @@ macButtons.forEach(({ color, label, action }) => {
 header.appendChild(macButtonsContainer);
 menuContainer.appendChild(header);
 
-// Adding a scrollable content area
 const scrollableContent = document.createElement('div');
 scrollableContent.style.cssText = `
   flex-grow: 1;
@@ -344,19 +347,19 @@ scrollableContent.style.cssText = `
   `;
 
 scrollableContent.style.overflowY = 'scroll';
-scrollableContent.style.scrollbarWidth = 'none'; // For Firefox
-scrollableContent.style.msOverflowStyle = 'none';  // For Internet Explorer and Edge
+scrollableContent.style.scrollbarWidth = 'none'; 
+scrollableContent.style.msOverflowStyle = 'none';  
 
 scrollableContent.addEventListener('scroll', (e) => {
   e.target.style.overflowY = 'scroll';
-  e.target.style.scrollbarWidth = 'none'; // For Firefox
-  e.target.style.msOverflowStyle = 'none';  // For Internet Explorer and Edge
+  e.target.style.scrollbarWidth = 'none'; 
+  e.target.style.msOverflowStyle = 'none';  
 });
 
 scrollableContent.addEventListener('scroll', (e) => {
   e.target.style.overflowY = 'scroll';
-  e.target.style.scrollbarWidth = 'none'; // For Firefox
-  e.target.style.msOverflowStyle = 'none';  // For Internet Explorer and Edge
+  e.target.style.scrollbarWidth = 'none'; 
+  e.target.style.msOverflowStyle = 'none';  
   e.target.style['::-webkit-scrollbar'] = {
     display: 'none'
   };
@@ -370,7 +373,6 @@ scrollableContent.style['::-webkit-scrollbar'] = {
   display: 'none'
 };
 
-// Adding a search bar
 const searchBar = document.createElement('input');
 searchBar.type = 'text';
 searchBar.placeholder = 'Search...';
@@ -409,7 +411,7 @@ Object.values(contentContainers).forEach((container) => {
     transition: all 0.3s ease;
     overflow-y: hidden; 
     padding: 8px; 
-    margin-top: 16px; /* Optional: Add spacing between the top bar and scrollable content */
+    margin-top: 16px; 
   `;
   scrollableContent.appendChild(container);
 });
@@ -474,20 +476,18 @@ const populateContent = (category) => {
       transition: background 0.3s; 
     `;
     button.onmouseover = () => (button.style.background = '#444');  
-    
+
     button.onmouseout = () => (button.style.background = '#000');
-    
+
 button.onclick = () => {
 
   if (equippedItems[category]) {
-    
-   
+
     if (equippedItems[category].button === button) {
       button.textContent = 'Equip';
-      
+
       equippedItems[category] = null;
-      
-      // Fetch and execute the script if the category is 'cursor'
+
       if (category === 'cursors') {
         showAlert('warning', 'Loading...');
         fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Custom%20Cursors/Cursors/default_cursor.js')
@@ -520,7 +520,7 @@ button.onclick = () => {
       showAlert('error', 'There Was An Issue Equipping The Cursor');
     });
 };
-    
+
     function showAlert(icon, message) {
   Swal.fire({
     toast: true,
@@ -532,7 +532,7 @@ button.onclick = () => {
     timerProgressBar: true,
   });
 }
- 
+
     if (equippedItems[category] && equippedItems[category].fetchUrl === fetchUrl) {
       button.textContent = 'Unequip';
       equippedItems[category].button = button;
