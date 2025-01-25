@@ -487,7 +487,6 @@ button.onclick = () => {
       
       equippedItems[category] = null;
       
-      // Fetch and execute the script if the category is 'cursor'
       if (category === 'cursors') {
         showAlert('warning', 'Loading...');
         fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Custom%20Cursors/Cursors/default_cursor.js')
