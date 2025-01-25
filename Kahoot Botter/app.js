@@ -1,11 +1,4 @@
-`if you're reading this, congratulations.
-this hack was open source for a while back in 2015, and then was obfuscated after due to some naughty people attempting to skid
-now here's v2 of this hack which literally will have 0 obfuscation in the client script due to it literally having nothing juicy, unless you want to attempt to pass malformed data to my server? lol
-keep in mind this is basically a copypasta of code made in 2016, cleaned up in 2017 and refactored in 2019... i miss 2016.
-i'm probably gonna consider leaving a free premium key for people that look at this, that's *if* i implement a premium. else, you can just donate me at paypal.me/mem1337 because i put in like 40 hours of work into v2
-anyways, get ready for trash, because all the important logic is impl serverside! :omegalul:
-sorry for the retards who can only understand code made with React/Angular... this is pure javascript + jquery :sunglasses:
-also don't get mad at me for putting this as a string instead of comments, you wouldn't've seen this message otherwise bc cloudflare cache
+`Edited By Wasd Made By Mem1337
 `
 
 var alerts = [];
