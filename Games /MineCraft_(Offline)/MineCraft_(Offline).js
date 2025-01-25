@@ -19,6 +19,7 @@ header.style.display = 'flex';
 header.style.alignItems = 'center';
 header.style.padding = '0 10px';
 header.style.cursor = 'grab';
+header.style.color = 'black'; 
 header.style.borderBottom = '1px solid #ddd';
 
 const closeBtn = document.createElement('div');
@@ -52,6 +53,7 @@ const title = document.createElement('span');
 title.textContent = 'Loading Game...';
 title.style.marginLeft = '10px';
 title.style.fontSize = '14px';
+title.style.color = 'black'; 
 title.style.fontWeight = 'bold';
 
 header.appendChild(closeBtn);
