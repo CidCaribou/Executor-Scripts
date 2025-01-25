@@ -1,4 +1,3 @@
-// Create and style the draggable iframe container and its header
 const container = document.createElement('div');
 container.id = 'frame-container';
 container.style.position = 'absolute';
@@ -10,7 +9,7 @@ container.style.border = '2px solid #ccc';
 container.style.borderRadius = '10px';
 container.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.2)';
 container.style.overflow = 'hidden';
-container.style.backgroundColor = '#2b2b2b'; // Darker gray background
+container.style.backgroundColor = '#2b2b2b'; 
 
 const header = document.createElement('div');
 header.id = 'frame-header';
@@ -20,6 +19,7 @@ header.style.display = 'flex';
 header.style.alignItems = 'center';
 header.style.padding = '0 10px';
 header.style.cursor = 'grab';
+header.style.color = 'black'; 
 header.style.borderBottom = '1px solid #ddd';
 
 const closeBtn = document.createElement('div');
@@ -54,6 +54,7 @@ title.textContent = 'Google Snake Mod';
 title.style.marginLeft = '10px';
 title.style.fontSize = '14px';
 title.style.fontWeight = 'bold';
+title.style.color = 'black'; 
 
 header.appendChild(closeBtn);
 header.appendChild(minimizeBtn);
@@ -70,7 +71,6 @@ container.appendChild(header);
 container.appendChild(iframe);
 document.body.appendChild(container);
 
-// Dragging functionality
 let isDragging = false;
 let offsetX, offsetY;
 
@@ -93,12 +93,10 @@ document.addEventListener('mouseup', () => {
   header.style.cursor = 'grab';
 });
 
-// Close button functionality
 closeBtn.addEventListener('click', () => {
   container.style.display = 'none';
 });
 
-// Minimize button functionality
 minimizeBtn.addEventListener('click', () => {
   if (iframe.style.display === 'none') {
     iframe.style.display = 'block';
@@ -109,24 +107,23 @@ minimizeBtn.addEventListener('click', () => {
   }
 });
 
-// Fullscreen button functionality
 let isFullscreen = false;
 fullscreenBtn.addEventListener('click', () => {
   if (!isFullscreen) {
     if (container.requestFullscreen) {
       container.requestFullscreen();
-    } else if (container.webkitRequestFullscreen) { // Safari compatibility
+    } else if (container.webkitRequestFullscreen) {
       container.webkitRequestFullscreen();
-    } else if (container.msRequestFullscreen) { // IE compatibility
+    } else if (container.msRequestFullscreen) { 
       container.msRequestFullscreen();
     }
     isFullscreen = true;
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) { // Safari compatibility
+    } else if (document.webkitExitFullscreen) { 
       document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { // IE compatibility
+    } else if (document.msExitFullscreen) { 
       document.msExitFullscreen();
     }
     isFullscreen = false;
