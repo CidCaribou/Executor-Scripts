@@ -7,6 +7,10 @@ javascript:(function() {
         return;
     }
   
+  const swalScript = document.createElement('script');
+  swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+  document.head.appendChild(swalScript);
+  
     popup = document.createElement("div");
     popup.id = popupId;
     popup.style.position = "fixed";
@@ -25,8 +29,7 @@ javascript:(function() {
 
     let isDragging = false;
     let offsetX, offsetY;
-
-    // Create a draggable header bar
+ 
     const headerBar = document.createElement("div");
     headerBar.style.height = "35px";
     headerBar.style.backgroundColor = "#D3D3D3"; 
@@ -63,7 +66,6 @@ javascript:(function() {
     tabsContainer.style.overflow = "hidden";
     tabsContainer.style.maxWidth = "90%"; 
 
-    // Create control bar
     const controlBar = document.createElement("div");
     controlBar.style.display = "flex";
     controlBar.style.padding = "5px";
@@ -109,7 +111,7 @@ reloadButton.style.transition = "transform 0.2s ease";
 let rotation = 0;
 
 reloadButton.addEventListener("click", () => {
-  rotation += 360; // Increment rotation
+  rotation += 360; 
   reloadButton.style.transform = `rotate(${rotation}deg) scale(1)`; 
   reloadButton.style.transition = "transform 0.5s ease"; 
 });
@@ -181,6 +183,17 @@ reloadButton.addEventListener("mouseleave", () => {
     minimizeButton.addEventListener("mouseleave", () => {
     minimizeButton.style.transform = `scale(1)`;
         });
+  
+    minimizeButton.addEventListener("click", () => {
+      Swal.fire({
+  title: "Minimize Button Not Finished",
+  text: "Minimize Will Come In A Later Update Just Close The Menu And Relaunch The Script To Toggle It On And Off",
+  icon: "error",
+  position: 'top'
+});
+        });
+
+  
 
     const closeButton = document.createElement("button");
     closeButton.style.margin = "0 5px";
@@ -319,7 +332,7 @@ tabButton.addEventListener("mouseout", () => {
             tabButton.classList.add('active');
             Array.from(contentContainer.children).forEach(iframe => iframe.style.display = "none");
             document.getElementById(tabId).style.display = "block";
-            urlInput.value = document.getElementById(tabId).src; // Update URL bar to current tab's URL
+            urlInput.value = document.getElementById(tabId).src; 
         });
 
         tabsContainer.appendChild(tabButton);
