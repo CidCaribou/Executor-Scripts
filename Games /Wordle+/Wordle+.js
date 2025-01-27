@@ -85,7 +85,7 @@ const loadHTMLContent = async (url) => {
   }
 };
 
-const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games%20/Wordle%2B/index.html';
+const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games%20/Wordle%2B/index1.html';
 loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
