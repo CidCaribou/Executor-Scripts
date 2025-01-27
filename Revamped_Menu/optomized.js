@@ -32,7 +32,6 @@ style.textContent = `
 
 body{
     min-height: 100vh;
-    background-color: var(--body-color);
     transition: var(--tran-05);
 }
 
