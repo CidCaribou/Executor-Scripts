@@ -85,7 +85,7 @@ const loadHTMLContent = async (url) => {
   }
 };
 
-const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Games%20/MineCraft_(Offline)/Minecraft_(Offlline).html';
+const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Games%20/Games%20/WebGL-Fluid-Simulation/index.html';
 loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
