@@ -85,7 +85,7 @@ const loadHTMLContent = async (url) => {
   }
 };
 
-const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Games%20/MineCraft-DragonX-V2/index.html';
+const htmlFileURL = 'https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/MineCraft-DragonX-V2/index.html';
 loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
