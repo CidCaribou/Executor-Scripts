@@ -84,4 +84,11 @@ Swal.fire({
       start();
     })(window, document);
   }
+  if (result.dismiss === Swal.DismissReason.cancel) {
+    Swal.fire({
+      title: "Operation Cancelled",
+      text: "You cancelled the auto scrolling.",
+      icon: "warning"
+    });
+  }
 });
