@@ -50,7 +50,7 @@ fullscreenBtn.style.backgroundColor = '#00ca4e';
 fullscreenBtn.style.cursor = 'pointer';
 
 const title = document.createElement('span');
-title.textContent = 'Google Snake Mod';
+title.textContent = 'Wordle+';
 title.style.marginLeft = '10px';
 title.style.fontSize = '14px';
 title.style.fontWeight = 'bold';
