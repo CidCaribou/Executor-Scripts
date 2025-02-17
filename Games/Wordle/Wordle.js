@@ -50,11 +50,11 @@ fullscreenBtn.style.backgroundColor = '#00ca4e';
 fullscreenBtn.style.cursor = 'pointer';
 
 const title = document.createElement('span');
-title.textContent = 'Loading Game...';
+title.textContent = 'Google Snake Mod';
 title.style.marginLeft = '10px';
 title.style.fontSize = '14px';
-title.style.color = 'black'; 
 title.style.fontWeight = 'bold';
+title.style.color = 'black'; 
 
 header.appendChild(closeBtn);
 header.appendChild(minimizeBtn);
@@ -62,6 +62,7 @@ header.appendChild(fullscreenBtn);
 header.appendChild(title);
 
 const iframe = document.createElement('iframe');
+iframe.src = 'https://gg-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games/Wordle/Wordle.xml&container=ig#daily';
 iframe.style.width = '100%';
 iframe.style.height = 'calc(100% - 30px)';
 iframe.style.border = 'none';
@@ -69,24 +70,6 @@ iframe.style.border = 'none';
 container.appendChild(header);
 container.appendChild(iframe);
 document.body.appendChild(container);
-
-const loadHTMLContent = async (url) => {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const htmlContent = await response.text();
-    iframe.srcdoc = htmlContent;
-    title.textContent = 'Wordle+';
-  } catch (error) {
-    alert('Error loading Game:', error);
-    title.textContent = 'Error Loading Game';
-  }
-};
-
-const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games%20/Wordle%2B/index1.html';
-loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
 let offsetX, offsetY;
@@ -129,7 +112,7 @@ fullscreenBtn.addEventListener('click', () => {
   if (!isFullscreen) {
     if (container.requestFullscreen) {
       container.requestFullscreen();
-    } else if (container.webkitRequestFullscreen) { 
+    } else if (container.webkitRequestFullscreen) {
       container.webkitRequestFullscreen();
     } else if (container.msRequestFullscreen) { 
       container.msRequestFullscreen();
