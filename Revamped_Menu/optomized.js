@@ -9,10 +9,7 @@ style.textContent = `
 /* Google Font Import - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+   
 }
 
 :root{
@@ -53,6 +50,10 @@ body.dark{
     position: fixed;
     top: 0;
     left: 0;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     height: 100%;
     width: 250px;
     padding: 10px 14px;
