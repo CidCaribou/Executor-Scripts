@@ -58,7 +58,7 @@ body.dark{
     padding: 10px 14px;
     background: var(--sidebar-color);
     transition: var(--tran-05);
-    z-index: 100;  
+    z-index: 99999;  
 }
 .sidebar.close{
     width: 1px;
@@ -75,7 +75,6 @@ body.dark{
     width: 35px;        
     line-height: 100px;  
 }
-
 
 
 /* ===== Reusable code - Here ===== */
@@ -343,10 +342,8 @@ const customHTML = `
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!----======== CSS ======== -->
     <link rel="stylesheet" href="style.css">
     
-    <!----===== Boxicons CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     
     <!--<title>Dashboard Sidebar Menu</title>--> 
@@ -424,30 +421,25 @@ const modeText = body.querySelector('.mode-text');
 const menuLinks = document.getElementById('menu-links');
 const closeMenuBtn = body.querySelector('.close-menu');
 
-let allButtons = []; // Store all buttons for global search
+let allButtons = []; 
 
-// Toggle sidebar visibility
 toggle.addEventListener('click', () => {
     sidebar.classList.toggle('close');
 });
 
-// Close sidebar when search is clicked
 searchBtn.addEventListener('click', () => {
     sidebar.classList.remove('close');
 });
 
-// Switch between dark and light modes
 modeSwitch.addEventListener('click', () => {
     body.classList.toggle('dark');
     modeText.innerText = body.classList.contains('dark') ? 'Light mode' : 'Dark mode';
 });
 
-// Completely remove the menu from the DOM when "Close Menu" is clicked
 closeMenuBtn.addEventListener('click', () => {
-    sidebar.remove(); // Removes the entire sidebar from the DOM
+    sidebar.remove();
 });
 
-// Load sub-buttons and replace current sidebar buttons
 function loadSubButtons(category) {
     const subButtons = {
         player: [
@@ -650,31 +642,25 @@ function loadSubButtons(category) {
          ]
     };
 
-    // Clear current buttons
     menuLinks.innerHTML = '';
 
-    // Add the Back button at the top
     const backButton = { text: "Back", icon: "bx bx-arrow-back", action: goBack };
     menuLinks.appendChild(createButtonElement(backButton));
 
-    // Add the selected category's sub-buttons
     subButtons[category].forEach(button => {
         const li = createButtonElement(button);
         menuLinks.appendChild(li);
     });
 
-    // Update the global button list
     updateAllButtons();
 
     sidebar.classList.remove('close');
 }
 
-// Function for back button behavior
 function goBack() {
     loadMainMenu();
 }
 
-// Load the main menu (called initially when the page loads)
 function loadMainMenu() {
     menuLinks.innerHTML = '';
     const mainButtons = [
@@ -686,17 +672,14 @@ function loadMainMenu() {
       { text: "Minigame", icon: "bx bxs-invader", action: () => loadSubButtons('Minigame') }
     ];
 
-    // Add the buttons to the menu
     mainButtons.forEach(button => {
         const li = createButtonElement(button);
         menuLinks.appendChild(li);
     });
 
-    // Update the global button list
     updateAllButtons();
 }
 
-// Helper function to create button elements
 function createButtonElement(button) {
     const li = document.createElement('li');
     li.classList.add('nav-link');
@@ -709,33 +692,29 @@ function createButtonElement(button) {
     return li;
 }
 
-// Update the global list of all buttons
 function updateAllButtons() {
     allButtons = Array.from(menuLinks.querySelectorAll('li'));
 }
 
-// Add search functionality
 searchInput.addEventListener('input', () => {
     const filterText = searchInput.value.toLowerCase();
 
     allButtons.forEach(link => {
         const text = link.querySelector('.nav-text').textContent.toLowerCase();
         if (text.includes(filterText)) {
-            link.style.display = ''; // Show the link
+            link.style.display = ''; 
         } else {
-            link.style.display = 'none'; // Hide the link
+            link.style.display = 'none'; 
         }
     });
-
-    // Ensure Back button stays visible at the top
+   
     const backButton = allButtons.find(link => 
         link.querySelector('.nav-text')?.textContent === "Back"
     );
     if (backButton) {
-        backButton.style.display = ''; // Always show Back button
-        menuLinks.insertBefore(backButton, menuLinks.firstChild); // Keep Back at the top
+        backButton.style.display = ''; 
+        menuLinks.insertBefore(backButton, menuLinks.firstChild); 
     }
 });
 
-// Initialize the page with the main menu
 loadMainMenu();
