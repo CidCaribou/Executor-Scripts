@@ -145,8 +145,6 @@ const clickEffects = [
 
 const styleTag = document.createElement('style');
 styleTag.textContent = `
-  font-family: Arial, sans-serif;
-  margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -156,6 +154,7 @@ styleTag.textContent = `
 `;
 
 let isDragging = false;
+let dragging = true;
 let offsetX = 0;
 let offsetY = 0;
 
@@ -170,6 +169,7 @@ menuContainer.style.cssText = `
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 99999;
   transform: translate(-50%, -50%);
   transition: height 0.3s ease; 
   display: flex;
@@ -187,6 +187,7 @@ header.style.cssText = `
   margin-bottom: 16px;
   flex-shrink: 0;
 `;
+
 header.className = 'header-class';
 
 menuContainer.appendChild(header);
@@ -196,14 +197,16 @@ document.body.appendChild(menuContainer);
 const headerElement = document.querySelector('.header-class'); 
 
 headerElement.addEventListener('mousedown', (e) => {
+  if (!dragging) return; 
   if (e.target.closest('.mac-buttons')) return;
+
   isDragging = true;
   offsetX = e.clientX - menuContainer.offsetLeft;
   offsetY = e.clientY - menuContainer.offsetTop;
 });
 
 document.addEventListener('mousemove', (e) => {
-  if (isDragging) {
+  if (isDragging && dragging) { 
     menuContainer.style.left = `${e.clientX - offsetX}px`;
     menuContainer.style.top = `${e.clientY - offsetY}px`;
   }
@@ -313,8 +316,10 @@ const macButtons = [
   action: () => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
+      dragging = true;
     } else {
       menuContainer.requestFullscreen();
+      dragging = false;
     }
   }
 }
@@ -337,6 +342,7 @@ macButtons.forEach(({ color, label, action }) => {
 header.appendChild(macButtonsContainer);
 menuContainer.appendChild(header);
 
+// Adding a scrollable content area
 const scrollableContent = document.createElement('div');
 scrollableContent.style.cssText = `
   flex-grow: 1;
@@ -347,19 +353,19 @@ scrollableContent.style.cssText = `
   `;
 
 scrollableContent.style.overflowY = 'scroll';
-scrollableContent.style.scrollbarWidth = 'none'; 
-scrollableContent.style.msOverflowStyle = 'none';  
+scrollableContent.style.scrollbarWidth = 'none'; // For Firefox
+scrollableContent.style.msOverflowStyle = 'none';  // For Internet Explorer and Edge
 
 scrollableContent.addEventListener('scroll', (e) => {
   e.target.style.overflowY = 'scroll';
-  e.target.style.scrollbarWidth = 'none'; 
-  e.target.style.msOverflowStyle = 'none';  
+  e.target.style.scrollbarWidth = 'none'; // For Firefox
+  e.target.style.msOverflowStyle = 'none';  // For Internet Explorer and Edge
 });
 
 scrollableContent.addEventListener('scroll', (e) => {
   e.target.style.overflowY = 'scroll';
-  e.target.style.scrollbarWidth = 'none'; 
-  e.target.style.msOverflowStyle = 'none';  
+  e.target.style.scrollbarWidth = 'none'; // For Firefox
+  e.target.style.msOverflowStyle = 'none';  // For Internet Explorer and Edge
   e.target.style['::-webkit-scrollbar'] = {
     display: 'none'
   };
@@ -373,6 +379,7 @@ scrollableContent.style['::-webkit-scrollbar'] = {
   display: 'none'
 };
 
+// Adding a search bar
 const searchBar = document.createElement('input');
 searchBar.type = 'text';
 searchBar.placeholder = 'Search...';
@@ -411,7 +418,7 @@ Object.values(contentContainers).forEach((container) => {
     transition: all 0.3s ease;
     overflow-y: hidden; 
     padding: 8px; 
-    margin-top: 16px; 
+    margin-top: 16px; /* Optional: Add spacing between the top bar and scrollable content */
   `;
   scrollableContent.appendChild(container);
 });
@@ -476,18 +483,19 @@ const populateContent = (category) => {
       transition: background 0.3s; 
     `;
     button.onmouseover = () => (button.style.background = '#444');  
-
+    
     button.onmouseout = () => (button.style.background = '#000');
-
+    
 button.onclick = () => {
-
-  if (equippedItems[category]) {
-
+   if (equippedItems[category]) {
+        equippedItems[category].button.textContent = 'Equip';
+    
+   
     if (equippedItems[category].button === button) {
       button.textContent = 'Equip';
-
+      
       equippedItems[category] = null;
-
+      
       if (category === 'cursors') {
         showAlert('warning', 'Loading...');
         fetch('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@refs/heads/main/Custom%20Cursors/Cursors/default_cursor.js')
@@ -520,7 +528,7 @@ button.onclick = () => {
       showAlert('error', 'There Was An Issue Equipping The Cursor');
     });
 };
-
+    
     function showAlert(icon, message) {
   Swal.fire({
     toast: true,
@@ -532,7 +540,7 @@ button.onclick = () => {
     timerProgressBar: true,
   });
 }
-
+ 
     if (equippedItems[category] && equippedItems[category].fetchUrl === fetchUrl) {
       button.textContent = 'Unequip';
       equippedItems[category].button = button;
