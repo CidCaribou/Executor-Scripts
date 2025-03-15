@@ -1,4 +1,4 @@
-javascript:(function() {
+javascript:(function(){
     if (!window.Swal) {
         let script = document.createElement('script');
         script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
@@ -11,7 +11,7 @@ javascript:(function() {
     function showConfirmation() {
         Swal.fire({
             title: "Are you sure?",
-            text: "Deleting Cookies Means That When You Reload The Page You Will Be Logged Out Of Your Account",
+            text: "Deleting cookies means that when you reload the page, you will be logged out of your account.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Delete Cookies",
