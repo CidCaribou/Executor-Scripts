@@ -21,7 +21,6 @@ const showToast = (message, icon) => {
     icon: icon,
     title: message,
     showConfirmButton: false,
-    timer: 3000,
     timerProgressBar: true
   }).fire();
 };
