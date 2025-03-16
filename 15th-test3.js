@@ -1,40 +1,42 @@
+// Dynamically load SweetAlert2
 const swalScript = document.createElement('script');
 swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
 document.head.appendChild(swalScript);
 
 swalScript.onload = function() {
-    resetSwal(); // Ensure no lingering timers or settings
+    setTimeout(() => Swal.close(), 0); // Immediately close any lingering alerts
     main();
 };
 
-// Function to reset SweetAlert2 before executing any new alert
-function resetSwal() {
-    Swal.close(); // Close any existing alerts
-    Swal.fire({ showConfirmButton: false, timer: null }); // Reset internal Swal state
-}
-
-// Toast function using Swal.mixin() to prevent interference with main alerts
+// Toast function (isolated from main alerts)
 const showToast = (message, icon) => {
-  Swal.mixin({
-    toast: true,
-    position: 'bottom',
-    icon: icon,
-    title: message,
-    showConfirmButton: false,
-    timerProgressBar: true
-  }).fire();
+    Swal.mixin({
+        toast: true,
+        position: 'bottom',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    }).fire();
 };
+
+// Function to reset SweetAlert2 completely
+function resetSwal() {
+    Swal.close();
+    Swal.update({ timer: null, showConfirmButton: true });
+}
 
 function main() {
     let url = "https://www.minecraft.net/en-us/15th-anniversary";
 
     function showLoading() {
-        resetSwal(); // Reset SweetAlert2 before showing a new alert
+        resetSwal();
         Swal.fire({
             title: "Please Wait",
             text: "Processing...",
             allowOutsideClick: false,
-            timer: null, // Ensure it does NOT auto-close
+            timer: null,
             didOpen: () => {
                 Swal.showLoading();
             }
@@ -42,7 +44,7 @@ function main() {
     }
 
     function processRequest() {
-        showLoading(); 
+        showLoading();
 
         try {
             const mcTokenData = localStorage.getItem('MCToken');
@@ -63,8 +65,8 @@ function main() {
                 credentials: "include"
             })
             .then(response => {
+                resetSwal();
                 console.log("Status Code:", response.status);
-                resetSwal(); // Reset before showing result alert
                 if (response.status === 204) {
                     Swal.fire("Success", "Please log out of Minecraft and then log back in to claim the cape.", "success");
                 } else {
