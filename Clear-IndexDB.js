@@ -3,7 +3,7 @@ javascript:(function(){
     swalScript.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
     swalScript.onload = function() {
           
-    swalInstance.close(); 
+    Swal.close(); 
         
         showConfirmation();
     };
