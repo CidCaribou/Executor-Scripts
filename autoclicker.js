@@ -38,6 +38,7 @@ document.head.appendChild(radioStyles);
 
 const container = document.createElement("div");
 container.style.width = "750px";
+container.style.height = "612px";
 container.style.backgroundColor = "#ffffff";
 container.style.borderRadius = "0 0 12px 12px";
 container.style.boxShadow = "0 8px 16px rgba(0, 0, 0, 0.2)";
@@ -93,12 +94,73 @@ const createButton = (color) => {
     btn.style.background = color;
     btn.style.border = '1px solid rgba(0,0,0,0.1)';
     btn.style.cursor = 'pointer';
+
+    btn.addEventListener('mouseover', () => {
+        btn.style.filter = 'brightness(85%)';
+    });
+
+    btn.addEventListener('mouseout', () => {
+        btn.style.filter = 'brightness(100%)';
+    });
+
     return btn;
 };
 
 const closeButton = createButton('#ff5f57');
 const minimizeButton = createButton('#ffbd2e');
 const maximizeButton = createButton('#28c840');
+
+closeButton.addEventListener('click', () => {
+    container.style.transition = 'all 0.2s ease-in';
+    container.style.opacity = '0';
+    container.style.transform = 'scale(0.9)';
+
+    setTimeout(() => {
+        if (container.parentNode) {
+            document.body.removeChild(container);
+        }
+    }, 200);
+});
+
+let isMinimized = false;
+minimizeButton.addEventListener('click', () => {
+    if (isMinimized) {
+        const savedHeight = container.dataset.savedHeight || '612px';
+
+        container.style.transition = 'height 0.3s ease-in-out';
+        container.style.height = savedHeight;
+
+        setTimeout(() => {
+            content.style.display = 'block';
+        }, 50);
+
+        header.style.borderRadius = '12px 12px 0 0';
+    } else {
+        container.dataset.savedHeight = container.style.height || '612px';
+
+        container.style.transition = 'height 0.3s ease-in-out';
+
+        content.style.display = 'none';
+
+        container.style.height = '30px';
+        header.style.borderRadius = '12px';
+    }
+    isMinimized = !isMinimized;
+});
+
+let isMaximized = false;
+maximizeButton.addEventListener('click', () => {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Fullscreen',
+            text: 'Not finished',
+            icon: 'info',
+            confirmButtonText: 'OK'
+        });
+    } else {
+        alert('Fullscreen: Not finished');
+    }
+});
 
 buttonContainer.appendChild(closeButton);
 buttonContainer.appendChild(minimizeButton);
@@ -109,8 +171,6 @@ title.innerText = "Auto Clicker V2";
 title.style.position = 'absolute';
 title.style.left = '50%';
 title.style.transform = 'translateX(-50%)';
-title.style.fontSize = '14px';
-title.style.color = '#333';
 title.style.fontSize = '18px';
 title.style.color = '#000';
 header.appendChild(title);
@@ -168,7 +228,7 @@ function createRadio(name, value, text, checked = false) {
   input.name = name;
   input.value = value;
   input.checked = checked;
-  input.classList.add("auto-clicker-radio"); 
+  input.classList.add("auto-clicker-radio");
   input.style.marginRight = "5px";
   input.style.backgroundColor = "white";
   input.style.transform = "translateY(3px)";
@@ -486,8 +546,6 @@ startButton.addEventListener("click", startAutoClick);
 
 let clickIntervalId = null;
 
-startButton.addEventListener("click", startAutoClick);
-
 function startAutoClick() {
   if (clickIntervalId) return;
 
@@ -510,6 +568,13 @@ function startAutoClick() {
   }
 
   clickIntervalId = setInterval(performClick, autoClickInterval);
+
+  startButton.disabled = true;
+  startButton.style.backgroundColor = "#cccccc";
+  startButton.style.cursor = "not-allowed";
+  stopButton.disabled = false;
+  stopButton.style.backgroundColor = "#dc3545";
+  stopButton.style.cursor = "pointer";
 }
 
 document.addEventListener("auxclick", (event) => {
@@ -579,10 +644,12 @@ stopButton.style.fontWeight = "bold";
 stopButton.style.fontSize = "16px";
 buttons.appendChild(stopButton);
 
+stopButton.addEventListener("click", stopAutoClick);
+
 function stopAutoClick() {
-  clearTimeout(clickIntervalId);
+  clearInterval(clickIntervalId);
   clickIntervalId = null;
-  toggleStopButton()
+  toggleStopButton();
   console.log("Auto-clicking stopped.");
 }
 
@@ -594,8 +661,6 @@ function toggleStopButton() {
   startButton.style.backgroundColor = "#28a745";
   startButton.style.cursor = "pointer";
 }
-
-stopButton.addEventListener("click", stopAutoClick);
 
 document.addEventListener("keydown", (e) => {
   if (e.code === "F7") stopAutoClick();
@@ -636,74 +701,50 @@ currentRadio.querySelector("input").addEventListener("change", () => {
   inputs.forEach(input => input.disabled = true);
 });
 
-startButton.addEventListener("click", () => {
-  startButton.disabled = true;
-  startButton.style.backgroundColor = "#cccccc";
-  startButton.style.cursor = "not-allowed";
-  stopButton.disabled = false;
-  stopButton.style.backgroundColor = "#dc3545";
-  stopButton.style.cursor = "pointer";
-});
-
-stopButton.addEventListener("click", () => {
-  stopButton.disabled = true;
-  stopButton.style.backgroundColor = "#cccccc";
-  stopButton.style.cursor = "not-allowed";
-  startButton.disabled = false;
-  startButton.style.backgroundColor = "#28a745";
-  startButton.style.cursor = "pointer";
-});
-
-startButton.addEventListener("click", () => {
-  });
-
 stopButton.style.minWidth = "300px";
 stopButton.style.minHeight = "70px";
 
 startButton.style.minWidth = "300px";
 startButton.style.minHeight = "70px";
 
-
 let isDragging = false;
 let offsetX = 0, offsetY = 0;
 
 header.addEventListener('mousedown', (e) => {
-if (
-    e.target === maximizeButton ||
-    e.target === minimizeButton ||
-    e.target === closeButton
-) {
-    return;
-}
-isDragging = true;
-offsetX = e.clientX - container.offsetLeft;
-offsetY = e.clientY - container.offsetTop;
-header.style.cursor = 'grabbing';
+    if (
+        e.target === maximizeButton ||
+        e.target === minimizeButton ||
+        e.target === closeButton
+    ) {
+        return;
+    }
+    isDragging = true;
+    offsetX = e.clientX - container.offsetLeft;
+    offsetY = e.clientY - container.offsetTop;
+    header.style.cursor = 'grabbing';
 });
 
 document.addEventListener('mousemove', (e) => {
     if (isDragging) {
-        container.style.left = e.clientX - offsetX + 'px';
-        container.style.top = e.clientY - offsetY + 'px';
+        let newLeft = e.clientX - offsetX;
+        let newTop = e.clientY - offsetY;
+
+        const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        const containerWidth = parseInt(container.offsetWidth);
+        const containerHeight = parseInt(container.offsetHeight);
+
+        const minVisiblePortion = 40;
+
+        newLeft = Math.max(-containerWidth + minVisiblePortion, Math.min(newLeft, windowWidth - minVisiblePortion));
+        newTop = Math.max(0, Math.min(newTop, windowHeight - minVisiblePortion));
+
+        container.style.left = `${newLeft}px`;
+        container.style.top = `${newTop}px`;
     }
 });
 
 document.addEventListener('mouseup', () => {
     isDragging = false;
     header.style.cursor = 'grab';
-});
-
-let isMinimized = false;
-
-minimizeButton.addEventListener('click', () => {
-    if (isMinimized) {
-        container.style.height = '612px';
-        content.style.display = 'block';
-        header.style.borderRadius = '12px 12px 0 0';
-    } else {
-        container.style.height = '20px';
-        content.style.display = 'none';
-        header.style.borderRadius = '10px';
-    }
-    isMinimized = !isMinimized;
 });
