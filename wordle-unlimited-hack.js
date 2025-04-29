@@ -20,38 +20,11 @@ javascript:(function() {
     }
   }
 
-  if (typeof Swal === 'undefined') {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
-    script.onload = function() {
-      showSolution();
-    };
-    document.head.appendChild(script);
+  const solution = getWordleSolution();
+
+  if (solution) {
+    alert('Wordle Solution: ' + solution.toUpperCase());
   } else {
-    showSolution();
-  }
-
-  function showSolution() {
-    const solution = getWordleSolution();
-
-    if (solution) {
-      Swal.fire({
-        title: 'Wordle Answer',
-        text: `The answer is: ${solution.toUpperCase()}`,
-        icon: 'success',
-        confirmButtonText: 'Thanks!',
-        confirmButtonColor: '#538d4e',
-        background: '#ffffff',
-        backdrop: 'rgba(0,0,0,0.4)'
-      });
-    } else {
-      Swal.fire({
-        title: 'Error',
-        text: 'Could not find Wordle solution in localStorage. Make sure you are on a Wordle Unlimited.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#538d4e'
-      });
-    }
+    alert('Error: Could not find Wordle solution in localStorage. Make sure you are on a Wordle game page.');
   }
 })();
