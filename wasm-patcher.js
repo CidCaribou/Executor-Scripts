@@ -712,6 +712,26 @@ javascript:(function() {
         { label: 'Module', path: 'Module.HEAPU8' },
         { label: 'gameInstance', path: 'gameInstance.Module.HEAPU8' }
       ];
+
+      // Add FSM scanner button
+      const fsmScanBtn = document.createElement('button');
+      fsmScanBtn.innerText = 'Scan FSM/UI Labels';
+      fsmScanBtn.style.cssText = `
+        padding: 3px 5px;
+        background-color: #336699;
+        font-size: 11px;
+        cursor: pointer;
+        border: 1px solid #555;
+        color: white;
+        margin-top: 5px;
+        width: 100%;
+      `;
+      fsmScanBtn.onclick = (e) => {
+        e.stopPropagation();
+        this.scanForFSMAndLabels();
+      };
+      pathButtonsArea.appendChild(fsmScanBtn);
+
       commonPaths.forEach(item => {
         const btn = document.createElement('button');
         btn.innerText = item.label;
@@ -836,6 +856,222 @@ javascript:(function() {
       this.updateStatus(this.foundMemory ?
         `Memory found at ${this.foundMemoryPath}. Ready to scan.` :
         'No memory found automatically. Try entering a path or clicking Auto-Detect.');
+    },
+
+    // FSM and UI Label Scanner
+    scanForFSMAndLabels: function() {
+      const memory = this.getWasmMemory();
+      if (!memory) {
+        alert('Failed to access WebAssembly memory. Try entering a custom memory path.');
+        return;
+      }
+      const buffer = memory.buffer;
+      const u8 = new Uint8Array(buffer);
+      const minStrLen = 3;
+      const maxStrLen = 64;
+      const ascii = (b) => b >= 32 && b <= 126;
+
+      this.updateStatus('Scanning for FSM names, state names, UI labels...');
+
+      // Create progress overlay
+      const progressOverlay = document.createElement('div');
+      progressOverlay.id = 'wasm-scan-progress';
+      progressOverlay.style.cssText = `
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 2147483647;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      `;
+      const progressText = document.createElement('div');
+      progressText.innerText = 'Scanning memory for strings...';
+      progressText.style.marginBottom = '10px';
+      const progressBar = document.createElement('div');
+      progressBar.style.cssText = `
+        width: 300px;
+        height: 10px;
+        background: #333;
+        border-radius: 5px;
+        overflow: hidden;
+      `;
+      const progressFill = document.createElement('div');
+      progressFill.style.cssText = `
+        height: 100%;
+        width: 0%;
+        background: #4a8af4;
+        transition: width 0.3s;
+      `;
+      progressBar.appendChild(progressFill);
+      progressOverlay.appendChild(progressText);
+      progressOverlay.appendChild(progressBar);
+      document.body.appendChild(progressOverlay);
+
+      // Start scanning in chunks to avoid freezing the UI
+      let strings = [];
+      let cur = [];
+      let i = 0;
+      const chunkSize = 1000000; // Process 1MB at a time
+      const scanChunk = () => {
+        const startTime = performance.now();
+        const endIdx = Math.min(i + chunkSize, u8.length);
+
+        for (; i < endIdx; i++) {
+          if (ascii(u8[i])) {
+            cur.push(u8[i]);
+            if (cur.length > maxStrLen) cur = [];
+          } else {
+            if (cur.length >= minStrLen) {
+              try {
+                const s = String.fromCharCode.apply(null, cur);
+                strings.push({ str: s, addr: i - cur.length });
+              } catch (e) {
+                // Skip oversized arrays
+              }
+            }
+            cur = [];
+          }
+        }
+
+        // Update progress
+        const progress = Math.min(i / u8.length * 100, 100);
+        progressFill.style.width = `${progress}%`;
+        progressText.innerText = `Scanning memory: ${Math.round(progress)}% (found ${strings.length} strings)`;
+
+        if (i < u8.length) {
+          // Still more to scan, continue in next frame
+          setTimeout(scanChunk, 0);
+        } else {
+          // Finished scanning, process results
+          progressText.innerText = 'Filtering and organizing results...';
+          setTimeout(finalizeResults, 0);
+        }
+      };
+
+      const finalizeResults = () => {
+        // Filter for likely FSM/state/UI label names
+        const fsmRegexes = [
+          /fsm/i, /state/i, /label/i, /ui/i, /button/i, /menu/i, /panel/i, /window/i,
+          /dialog/i, /scene/i, /canvas/i, /text/i, /input/i, /toggle/i, /slider/i, /dropdown/i,
+          /screen/i, /page/i, /view/i, /container/i, /modal/i, /popup/i, /tooltip/i,
+          /transition/i, /animation/i, /machine/i, /trigger/i, /event/i, /action/i,
+          /enabled/i, /disabled/i, /visible/i, /hidden/i, /active/i, /inactive/i,
+          /open/i, /close/i, /start/i, /end/i, /init/i, /finish/i
+        ];
+        const matches = strings.filter(s =>
+          fsmRegexes.some(r => r.test(s.str)) &&
+          s.str.length <= maxStrLen && s.str.length >= minStrLen
+        );
+        // Remove duplicates
+        const seen = new Set();
+        const uniqueMatches = matches.filter(s => {
+          if (seen.has(s.str)) return false;
+          seen.add(s.str);
+          return true;
+        });
+        // Remove progress overlay
+        if (progressOverlay && progressOverlay.parentNode) {
+          progressOverlay.parentNode.removeChild(progressOverlay);
+        }
+        // Show modal
+        UnityWasmScanner.showFSMModal(uniqueMatches);
+        UnityWasmScanner.updateStatus(`FSM/UI label scan complete. Found ${uniqueMatches.length} matches.`);
+      };
+
+      scanChunk();
+    },
+
+    showFSMModal: function(matches) {
+      const existing = document.getElementById('wasm-fsm-modal');
+      if (existing) existing.remove();
+      const modal = document.createElement('div');
+      modal.id = 'wasm-fsm-modal';
+      modal.style.cssText = `
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.7);
+        z-index: 2147483647;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `;
+      const inner = document.createElement('div');
+      inner.style.cssText = `
+        background: #232b3a;
+        color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 0 20px #000a;
+        padding: 24px 18px 18px 18px;
+        min-width: 350px;
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow: auto;
+        position: relative;
+      `;
+      const closeBtn = document.createElement('button');
+      closeBtn.innerText = '×';
+      closeBtn.style.cssText = `
+        position: absolute;
+        top: 8px; right: 10px;
+        background: #333;
+        color: #fff;
+        border: none;
+        font-size: 20px;
+        border-radius: 3px;
+        cursor: pointer;
+        width: 32px; height: 32px;
+        line-height: 28px;
+        text-align: center;
+      `;
+      closeBtn.onclick = () => modal.remove();
+      inner.appendChild(closeBtn);
+      const title = document.createElement('div');
+      title.innerHTML = `<b>FSM/State/UI Label Strings</b> <span style="font-size:12px; color:#aaf;">(${matches.length} found)</span>`;
+      title.style.cssText = `font-size: 18px; margin-bottom: 10px;`;
+      inner.appendChild(title);
+      if (matches.length === 0) {
+        const none = document.createElement('div');
+        none.innerText = 'No likely FSM/state/UI label strings found.';
+        none.style.cssText = 'color: #ccc; font-size: 14px; margin: 20px 0;';
+        inner.appendChild(none);
+      } else {
+        const list = document.createElement('div');
+        list.style.cssText = `
+          max-height: 50vh;
+          overflow-y: auto;
+          font-size: 13px;
+          background: #1a2230;
+          border: 1px solid #444;
+          border-radius: 4px;
+          padding: 8px;
+        `;
+        matches.forEach(m => {
+          const row = document.createElement('div');
+          row.style.cssText = `
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding: 3px 0;
+            gap: 8px;
+          `;
+          const addr = document.createElement('span');
+          addr.innerText = m.addr;
+          addr.style.cssText = `color: #aaf; font-family: monospace; font-size: 12px;`;
+          const str = document.createElement('span');
+          str.innerText = m.str;
+          str.style.cssText = `color: #fff; font-family: monospace;`;
+          row.appendChild(addr);
+          row.appendChild(str);
+          list.appendChild(row);
+        });
+        inner.appendChild(list);
+      }
+      modal.appendChild(inner);
+      document.body.appendChild(modal);
     },
 
     makeDraggable: function(element, dragHandle) {
