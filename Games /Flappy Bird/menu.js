@@ -95,14 +95,14 @@ const loadHTMLContent = async (url) => {
     }
     const htmlContent = await response.text();
     iframe.srcdoc = htmlContent;
-    title.textContent = 'Time Shooter 2';
+    title.textContent = 'Flappy Bird';
   } catch (error) {
     alert('Error loading Game:', error);
     title.textContent = 'Error Loading Game';
   }
 };
 
-const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games%20/Wordle%2B/index1.html';
+const htmlFileURL = 'https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Flappy%20Bird/FlappyBird.html';
 loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
