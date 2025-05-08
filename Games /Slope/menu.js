@@ -87,7 +87,7 @@ container.appendChild(header);
 container.appendChild(iframe);
 document.body.appendChild(container);
 
-const htmlFileURL = 'https://htmlpreview.github.io/?https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/MineCraft-DragonX-V2/DragonX_V2_International.html';
+const htmlFileURL = 'https://htmlpreview.github.io/?https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Slope/slope.html';
 iframe.src = htmlFileURL;
 iframe.onload = () => {
   title.textContent = 'Slope';
