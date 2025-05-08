@@ -1,28 +1,29 @@
 javascript: (function () {
   if (location.host == 'www.nytimes.com') {
-    const year = new Date().getFullYear(),
-      month = new Date().getMonth() + 1,
-      day = new Date().getDate(),
+    const date = new Date(),
+      year = date.getFullYear(),
+      month = date.getMonth() + 1,
+      day = date.getDate(),
+      formattedMonth = month.toString().length === 1 ? '0' + month : month,
+      formattedDay = day.toString().length === 1 ? '0' + day : day,
       url =
         'https://www.nytimes.com/svc/wordle/v2/' +
         year +
         '-' +
-        (month.toString().length === 1 ? '0' + month : month) +
+        formattedMonth +
         '-' +
-        day +
-        '.json'
+        formattedDay +
+        '.json';
+
     fetch(url)
-      .then((_0x1cba03) => _0x1cba03.json())
-      .then((_0x3581f7) => {
+      .then((response) => response.json())
+      .then((data) => {
         alert(
-          'The answer is: ' +
-            _0x3581f7.solution +
-            '\nAuthor: ' +
-            _0x3581f7.editor
-        )
+          'The answer is: ' + data.solution + '\nAuthor: ' + data.editor
+        );
       })
-      .catch((_0x16cfd0) => console.error(_0x16cfd0))
+      .catch((error) => console.error(error));
   } else {
-    alert('You must run this on the Wordle page.')
+    alert('You must run this on the Wordle page.');
   }
-})()
+})();
