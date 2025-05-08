@@ -87,11 +87,23 @@ container.appendChild(header);
 container.appendChild(iframe);
 document.body.appendChild(container);
 
-const htmlFileURL = 'https://htmlpreview.github.io/?https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Slope/slope.html';
-iframe.src = htmlFileURL;
-iframe.onload = () => {
-  title.textContent = 'Slope';
+const loadHTMLContent = async (url) => {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const htmlContent = await response.text();
+    iframe.srcdoc = htmlContent;
+    title.textContent = 'Slope';
+  } catch (error) {
+    alert('Error loading Game:', error);
+    title.textContent = 'Error Loading Game';
+  }
 };
+
+const htmlFileURL = 'https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/refs/heads/main/Games%20/Slope/slope.html';
+loadHTMLContent(htmlFileURL);
 
 let isDragging = false;
 let offsetX, offsetY;
@@ -155,7 +167,7 @@ fullscreenBtn.addEventListener('click', () => {
 newTabBtn.addEventListener('click', () => {
   const newTab = window.open('about:blank', '_blank');
   if (!newTab) return;
-  const src = iframe.src || htmlFileURL;
+  const src = iframe.srcdoc ? 'data:text/html;charset=utf-8,' + encodeURIComponent(iframe.srcdoc) : htmlFileURL;
   const html = `<!DOCTYPE html><html><head><style>html,body{margin:0;height:100%;background:#000;}iframe{width:100%;height:100%;border:none;}</style></head><body><iframe src="${src}" allowfullscreen></iframe></body></html>`;
   newTab.document.write(html);
   newTab.document.close();
