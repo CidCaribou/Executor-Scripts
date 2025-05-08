@@ -90,7 +90,7 @@ document.body.appendChild(container);
 const htmlFileURL = 'https://htmlpreview.github.io/?https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games%20/Wordle%2B/index1.html';
 iframe.src = htmlFileURL;
 iframe.onload = () => {
-  title.textContent = 'Time Shooter 2';
+  title.textContent = 'Wordle+';
 };
 
 let isDragging = false;
