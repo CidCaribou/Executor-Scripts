@@ -87,8 +87,7 @@ container.appendChild(header);
 container.appendChild(iframe);
 document.body.appendChild(container);
 
-const htmlFileURL = 'https://htmlpreview.github.io/?https://raw.githubusercontent.com/CidCaribou/Executor-Scripts/main/Games%20/TimeShooter-2/index.html';
-iframe.src = htmlFileURL;
+const htmlFileURL = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Games%20/Wordle%2B/index1.html';
 iframe.onload = () => {
   title.textContent = 'Time Shooter 2';
 };
