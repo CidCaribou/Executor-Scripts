@@ -1,8 +1,14 @@
-const swalScript = document.createElement('script');
-swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
-document.head.appendChild(swalScript);
+if (typeof Swal !== 'undefined') {
+  toggleInspect();
+} else {
+  const swalScript = document.createElement('script');
+  swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+  document.head.appendChild(swalScript);
 
-swalScript.onload = () => {
+  swalScript.onload = toggleInspect;
+}
+
+function toggleInspect() {
   if (document.body.contentEditable !== 'true') {
     document.body.contentEditable = 'true';
     Swal.fire({
@@ -18,4 +24,4 @@ swalScript.onload = () => {
       icon: "warning"
     });
   }
-};
+}
