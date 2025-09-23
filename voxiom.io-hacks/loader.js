@@ -12,7 +12,7 @@ loadScript('https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.umd.min.js'
   console.log('lil-gui loaded');
   loadScript('https://unpkg.com/three@0.150.0/build/three.min.js', function () {
     console.log('three.js loaded');
-  loadScript('https://unpkg.com/three@0.150.0/build/three.min.js', function () {
+  loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/voxiom.io-hacks/hack.js', function () {
     console.log('hacks loaded');
 
     if (typeof swal === 'undefined') {
