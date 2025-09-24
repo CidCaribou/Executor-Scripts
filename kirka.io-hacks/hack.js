@@ -1,8 +1,7 @@
 const scripts = [
   "https://cdn.jsdelivr.net/npm/sweetalert2@11", 
   "https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js", 
-  "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/kirka.io-hacks/silent.js",
-  "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/kirka.io-hacks/wallhack.js"
+  "https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/kirka.io-hacks/hacks.js",
 ];
 
 function loadScript(url) {
