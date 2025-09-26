@@ -6,10 +6,9 @@ const loadScript = (src, callback) => {
   document.head.appendChild(script);
 };
 
-loadScript('https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/dist/lil-gui.umd.min.js', () =>
-  loadScript('https://unpkg.com/three@0.150.0/build/three.min.js', () =>
+loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Dino/pollyfill.js', () =>
+  loadScript('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js', () =>
     loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/voxiom.io-hacks/hack.js', () =>
-      loadScript('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js', () =>
         showSuccessAlert()
       )
     )
