@@ -8,19 +8,6 @@ const loadScript = (src, callback) => {
 
 loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Dino/pollyfill.js', () =>
   loadScript('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js', () =>
-    loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Dino/tus-dino.js', () =>
-        showSuccessAlert()
-      )
-    )
+    loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Dino/tus-dino.js')
+  )
 );
-
-function showSuccessAlert() {
-  Swal.fire({
-    title: 'Success!',
-    text: 'Scripts Tus Dino loaded successfully!',
-    icon: 'success',
-    timer: 2000,
-    timerProgressBar: true,
-    confirmButtonText: 'Okay'
-  });
-}
