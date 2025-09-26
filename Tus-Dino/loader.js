@@ -12,7 +12,6 @@ loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Din
         showSuccessAlert()
       )
     )
-  )
 );
 
 function showSuccessAlert() {
