@@ -59,11 +59,11 @@ window.getMetablockData = function() {
         { block: 'name', data: 'TusDino' },
         { block: 'version', data: '0.17.4' },
         { block: 'author', data: 'Lapide' },
+        { block: 'show-discord', data: 'no' },
         { block: 'description', data: 'Best Chrome Dino T-Rex mod menu hack cheat' },
     ];
 };
-
-
+    
     // Duplicate script detection
     function generateRandomNumber() {
         return Math.floor(Math.random() * 1000000000).toString() + Math.floor(Math.random() * 1000000000).toString() + Math.floor(Math.random() * 1000000000).toString() + Math.floor(Math.random() * 1000000000).toString() + Math.floor(Math.random() * 1000000000).toString();
