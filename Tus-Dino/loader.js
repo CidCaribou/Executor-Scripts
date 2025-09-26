@@ -8,7 +8,7 @@ const loadScript = (src, callback) => {
 
 loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Dino/pollyfill.js', () =>
   loadScript('https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js', () =>
-    loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/voxiom.io-hacks/hack.js', () =>
+    loadScript('https://cdn.jsdelivr.net/gh/CidCaribou/Executor-Scripts@main/Tus-Dino/tus-dino.js', () =>
         showSuccessAlert()
       )
     )
