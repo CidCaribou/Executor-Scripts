@@ -20,6 +20,8 @@ function showSuccessAlert() {
     title: 'Success!',
     text: 'Scripts Tus Dino loaded successfully!',
     icon: 'success',
+    timer: 2000,
+    timerProgressBar: true,
     confirmButtonText: 'Okay'
   });
 }
