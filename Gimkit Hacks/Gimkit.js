@@ -1,18 +1,9 @@
-// ==UserScript==
 // @name        Gimkit Cheat
 // @description A userscript that allows you to cheat across various gimkit games
-// @namespace   https://www.github.com/TheLazySquid/GimkitCheat/
-// @match       https://www.gimkit.com/join*
-// @run-at      document-start
-// @iconURL     https://www.gimkit.com/favicon.png
 // @author      TheLazySquid
 // @updateURL   https://raw.githubusercontent.com/TheLazySquid/GimkitCheat/main/build/bundle.user.js
-// @downloadURL https://raw.githubusercontent.com/TheLazySquid/GimkitCheat/main/build/bundle.user.js
 // @version     1.2.2
-// @grant       GM_getValue
-// @grant       GM_setValue
-// @grant       GM_deleteValue
-// ==/UserScript==
+
 (function () {
 	'use strict';
 
