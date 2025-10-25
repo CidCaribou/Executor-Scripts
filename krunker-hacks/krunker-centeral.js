@@ -7,6 +7,7 @@
 // @author      Krunker Central
 // @description A Krunker hack by Krunker Central - https://krunkercentral.com/
 // @run-at      document-start
+// !!!important ⬆️
 // @noframes
 // ==/UserScript==
 
@@ -17,7 +18,6 @@ const version = "1.5";
 const pageUrl = "";
 
 (() => {
-
 
 fetch(serverUrl + "/current-version").then(_0x1b39fc => _0x1b39fc.text()).then(_0x5eb659 => {
   if (_0x5eb659 !== version) {
@@ -1466,4 +1466,4 @@ observer.observe(document, {
 
 })();
 
-
+cheat()
