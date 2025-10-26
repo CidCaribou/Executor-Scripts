@@ -2,13 +2,10 @@
 // @name        Krunker Central Dogeware
 // @namespace   Krunker Central Scripts
 // @match       *://krunker.io/*
-// @grant       none
 // @version     1.0
 // @author      Krunker Central
-// @description A Krunker hack by Krunker Central - https://krunkercentral.com/
-// @run-at      document-start
-// !!!important ⬆️
-// @noframes
+// @description A Krunker hack by Krunker Central - https://krunkercentral.com/ (Cracked)
+// @run-at      document-start 
 // ==/UserScript==
 
 localStorage.logs = true;
@@ -19,14 +16,6 @@ const pageUrl = "";
 
 (() => {
 
-fetch(serverUrl + "/current-version").then(_0x1b39fc => _0x1b39fc.text()).then(_0x5eb659 => {
-  if (_0x5eb659 !== version) {
-    const _0x29e52f = confirm("This version of the cheat is no longer working, we have released a new version of the cheat (" + version + " -> " + _0x5eb659 + "),\n\nPress OK to be directed to Krunkercentral.com, once you're there download the hack from the latest post");
-    if (_0x29e52f) {
-      location.href = "https://krunkercentral.com/";
-    }
-  }
-});
 const id = "_" + Math.random().toString(36).slice(2);
 window[id] = cheat;
 function cheat() {
