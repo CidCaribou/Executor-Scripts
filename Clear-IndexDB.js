@@ -2,9 +2,7 @@ javascript:(function(){
     let swalScript = document.createElement('script');
     swalScript.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
     swalScript.onload = function() {
-          
-    Swal.close(); 
-        
+                  
         showConfirmation();
     };
     document.head.appendChild(swalScript);
