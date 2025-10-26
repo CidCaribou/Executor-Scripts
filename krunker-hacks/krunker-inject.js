@@ -12,65 +12,55 @@
         });
     }
 
-    // Helper to keep Swal references so they don't disappear
-    function keepAlert(alert) {
-        window._swalAlerts = window._swalAlerts || [];
-        window._swalAlerts.push(alert);
-        return alert;
-    }
+    await ensureSwal();
 
     if (!onKrunker) {
-        try {
-            await ensureSwal();
-            const result = await keepAlert(Swal.fire({
-                title: "Wrong Website",
-                text: "This script only works on krunker.io. Open it now?",
-                icon: "error",
-                showCancelButton: true,
-                confirmButtonText: "Yes",
-                cancelButtonText: "No"
-            }));
-            if (result.isConfirmed) location.href = "https://krunker.io";
-        } catch (e) {
-            if (confirm("This script only works on krunker.io. Open it now?")) {
-                location.href = "https://krunker.io";
-            }
-        }
+        const result = await Swal.fire({
+            title: "Wrong Website",
+            text: "This script only works on krunker.io. Open it now?",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No"
+        });
+        if (result.isConfirmed) location.href = "https://krunker.io";
         return;
     }
 
-    await ensureSwal();
     const enabled = localStorage.getItem("injectkrunkerhacks") === "true";
 
     if (!enabled) {
-        const result = await keepAlert(Swal.fire({
+        const result = await Swal.fire({
             title: "Enable Hacks?",
             text: "The page must reload to activate hacks. Refresh now?",
             icon: "question",
             showCancelButton: true,
             confirmButtonText: "Yes, refresh"
-        }));
+        });
         if (result.isConfirmed) {
             localStorage.setItem("injectkrunkerhacks", "true");
-            setTimeout(() => location.reload(), 150);
+            // Wait a little so alert finishes rendering
+            setTimeout(() => location.reload(), 500);
         }
     } else {
-        const result = await keepAlert(Swal.fire({
+        const result = await Swal.fire({
             title: "Disable Hacks?",
             text: "Turn off hacks?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes, turn off and refresh."
-        }));
+        });
         if (result.isConfirmed) {
             localStorage.removeItem("injectkrunkerhacks");
-            setTimeout(() => location.reload(), 150);
-            keepAlert(Swal.fire({
+            // Show persistent alert first
+            await Swal.fire({
                 title: "Disabled",
                 text: "Hacks have been turned off",
                 icon: "success",
-                showConfirmButton: true  // persistent alert
-            }));
+                showConfirmButton: true
+            });
+            // Then reload
+            setTimeout(() => location.reload(), 200);
         }
     }
 })();
