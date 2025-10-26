@@ -1,3 +1,10 @@
+    async function closeActiveSwal() {
+        if (window.Swal && Swal.isVisible()) {
+            Swal.close();
+            // Wait for Swal to finish closing animation
+            await new Promise(r => setTimeout(r, 250));
+        }
+    }
 if (typeof Swal !== 'undefined') {
   toggleInspect();
 } else {
