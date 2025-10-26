@@ -1,12 +1,4 @@
-// ==UserScript==
-// @name        Krunker Central Dogeware
-// @namespace   Krunker Central Scripts
-// @match       *://krunker.io/*
-// @version     1.0
-// @author      Krunker Central
-// @description A Krunker hack by Krunker Central - https://krunkercentral.com/ (Cracked)
-// @run-at      document-start 
-// ==/UserScript==
+(function(){
 
 localStorage.logs = true;
 const consoleLog = console.log;
@@ -1454,5 +1446,4 @@ observer.observe(document, {
 });
 
 })();
-
-cheat()
+})();
