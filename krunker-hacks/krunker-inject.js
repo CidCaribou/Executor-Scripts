@@ -1,83 +1,70 @@
 (async function() {
-  if (location.hostname !== 'krunker.io') return;
+  const onKrunker = location.hostname.endsWith("krunker.io");
 
-  // Load SweetAlert2 if not present
   async function ensureSwal() {
-    if (window.Swal) return;
-    // load CSS
-    const cssHref = 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css';
-    if (!document.querySelector(`link[href="${cssHref}"]`)) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = cssHref;
-      document.head && document.head.appendChild(link);
-    }
-    // load script
+    if (window.Swal) return; 
     await new Promise((resolve, reject) => {
-      if (window.Swal) return resolve();
-      const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+      const s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
       s.onload = () => resolve();
       s.onerror = (e) => reject(e);
-      document.head && document.head.appendChild(s);
+      document.head.appendChild(s);
     });
   }
 
-  try {
-    await ensureSwal();
-  } catch (e) {
-    // If Swal fails to load, fallback to native confirm
-    const raw = localStorage.getItem('injectkrunkerhacks');
-    const enabled = raw === 'true';
-    if (!enabled) {
-      const ok = confirm('In order for the hacks to work the website will have to reload. Are you sure you want to refresh?');
-      if (ok) {
-        localStorage.setItem('injectkrunkerhacks', 'true');
-        location.reload();
-      }
-    } else {
-      const off = confirm('Hacks are currently enabled. Do you want to turn them off?');
-      if (off) {
-        localStorage.removeItem('injectkrunkerhacks');
-        alert('injectkrunkerhacks removed. Refresh the page if you want the change to fully apply.');
+  if (!onKrunker) {
+    try {
+      await ensureSwal();
+      const result = await Swal.fire({
+        title: "Wrong Website",
+        text: "This script only works on krunker.io. Open it now?",
+        icon: "error",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No"
+      });
+      if (result.isConfirmed) location.href = "https://krunker.io";
+    } catch (e) {
+      if (confirm("This script only works on krunker.io. Open it now?")) {
+        location.href = "https://krunker.io";
       }
     }
     return;
   }
 
-  const raw = localStorage.getItem('injectkrunkerhacks');
-  const enabled = raw === 'true';
+  await ensureSwal();
+  const enabled = localStorage.getItem("injectkrunkerhacks") === "true";
 
   if (!enabled) {
-    // Ask to enable and reload
     const result = await Swal.fire({
-      title: 'Enable Hacks?',
-      text: 'In order for the hacks to work the website will have to reload. Are you sure you want to refresh?',
-      icon: 'question',
+      title: "Enable Hacks?",
+      text: "The page must reload to activate hacks. Refresh now?",
+      icon: "question",
       showCancelButton: true,
-      confirmButtonText: 'Yes, refresh',
-      cancelButtonText: 'No'
+      confirmButtonText: "Yes, refresh"
     });
-
     if (result.isConfirmed) {
-      localStorage.setItem('injectkrunkerhacks', 'true');
-      // small delay to let Swal finish animating (optional)
+      localStorage.setItem("injectkrunkerhacks", "true");
       setTimeout(() => location.reload(), 150);
     }
   } else {
-    // Ask to disable
     const result = await Swal.fire({
-      title: 'Disable Hacks?',
-      text: 'Hacks are currently enabled. Do you want to turn them off?',
-      icon: 'warning',
+      title: "Disable Hacks?",
+      text: "Turn off hacks?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, turn off',
-      cancelButtonText: 'No, keep on'
+      confirmButtonText: "Yes, turn off and refresh."
     });
-
     if (result.isConfirmed) {
-      localStorage.removeItem('injectkrunkerhacks');
-      await Swal.fire({ title: 'Disabled', text: 'injectkrunkerhacks removed', icon: 'success', timer: 1400, showConfirmButton: false });
+      localStorage.removeItem("injectkrunkerhacks");
+      setTimeout(() => location.reload(), 150);
+      await Swal.fire({
+        title: "Disabled",
+        text: "Hacks have been turned off",
+        icon: "success",
+        timer: 1200,
+        showConfirmButton: false
+      });
     }
   }
 })();
