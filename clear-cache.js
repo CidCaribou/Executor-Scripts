@@ -14,6 +14,7 @@ javascript:(function(){
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
+            timer: '1000000000000',
             confirmButtonText: "Yes, clear cache!",
             cancelButtonText: "No, keep my cache"
         }).then((result) => {
