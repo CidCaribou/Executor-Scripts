@@ -20,16 +20,23 @@ const material = new THREE.RawShaderMaterial({
     }`
 });
 
-let worldScene;
-WeakMap.prototype.set = new Proxy(WeakMap.prototype.set, {
-    apply(target, thisArgs, [object]) {
-        if (object.type === 'Scene' && object.children.length > 4) {
-            worldScene = object;
-            console.log('SCENE FOUND!', worldScene);
+let worldScene = window.worldScene || null;
+
+if (!worldScene) {
+    console.log('[ESP] Scene not found, setting up hook...');
+    WeakMap.prototype.set = new Proxy(WeakMap.prototype.set, {
+        apply(target, thisArgs, [object]) {
+            if (object.type === 'Scene' && object.children.length > 4) {
+                worldScene = object;
+                window.worldScene = object;
+                console.log('[ESP] SCENE FOUND!', worldScene);
+            }
+            return Reflect.apply(...arguments);
         }
-        return Reflect.apply(...arguments);
-    }
-});
+    });
+} else {
+    console.log('[ESP] Using pre-hooked scene!', worldScene);
+}
 
 const precision = Math.pow(10, 4);
 function createKey(object) {
@@ -72,6 +79,11 @@ function animate() {
     overlayCtx.strokeStyle = 'rgba(255,0,0,0.5)';
     overlayCtx.lineWidth = 2;
     overlayCtx.stroke();
+
+    if (!worldScene && window.worldScene) {
+        worldScene = window.worldScene;
+        console.log('[ESP] Scene now available!');
+    }
 
     if (!worldScene) return;
 
