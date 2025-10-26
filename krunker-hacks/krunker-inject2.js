@@ -23,7 +23,17 @@
             confirmButtonText: "Yes",
             cancelButtonText: "No"
         });
-        if (result.isConfirmed) location.href = "https://krunker.io";
+        if (result.isConfirmed) {
+            await Swal.fire({
+                title: "Redirecting...",
+                toast: true,
+                position: "bottom",
+                icon: "info",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            location.href = "https://krunker.io";
+        }
         return;
     }
 
@@ -39,7 +49,14 @@
         });
         if (result.isConfirmed) {
             localStorage.setItem("injectkrunkerhacks", "true");
-            // Wait a little so alert finishes rendering
+            await Swal.fire({
+                title: "Reloading...",
+                toast: true,
+                position: "bottom",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1200
+            });
             setTimeout(() => location.reload(), 500);
         }
     } else {
@@ -52,14 +69,12 @@
         });
         if (result.isConfirmed) {
             localStorage.removeItem("injectkrunkerhacks");
-            // Show persistent alert first
             await Swal.fire({
                 title: "Disabled",
                 text: "Hacks have been turned off",
                 icon: "success",
                 showConfirmButton: true
             });
-            // Then reload
             setTimeout(() => location.reload(), 200);
         }
     }
