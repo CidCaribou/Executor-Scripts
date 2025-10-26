@@ -1,12 +1,13 @@
-javascript:(function(){
-    // Wait a little to avoid conflicts
-    setTimeout(() => {
-        // Close any currently open Swal alerts
+javascript:(function () {
+    async function closeActiveSwal() {
         if (window.Swal && Swal.isVisible()) {
             Swal.close();
+            // Wait for Swal to finish closing animation
+            await new Promise(r => setTimeout(r, 250));
         }
+    }
 
-        // Show confirmation alert
+    closeActiveSwal().then(() => {
         Swal.fire({
             title: "Are you sure?",
             text: "This will clear your IndexedDB storage. Some offline app data may be lost.",
@@ -24,30 +25,30 @@ javascript:(function(){
                     title: "Operation Canceled",
                     text: "Your IndexedDB was not cleared.",
                     icon: "info",
-                    toast: true, // makes it a small toast alert
-                    position: 'top-end',
+                    toast: true,
+                    position: "top-end",
                     timer: 3000,
                     showConfirmButton: false
                 });
             }
         });
+    });
 
-        function clearIndexedDB() {
-            if ('indexedDB' in window) {
-                indexedDB.databases().then((databases) => {
-                    databases.forEach((db) => indexedDB.deleteDatabase(db.name));
-                });
-            }
-            Swal.fire({
-                title: "IndexedDB Cleared!",
-                text: "Your IndexedDB storage has been successfully cleared.",
-                icon: "success",
-                toast: true, // allows multiple alerts to show
-                position: 'top-end',
-                timer: 3000,
-                showConfirmButton: false
+    function clearIndexedDB() {
+        if ("indexedDB" in window) {
+            indexedDB.databases().then((databases) => {
+                databases.forEach((db) => indexedDB.deleteDatabase(db.name));
             });
         }
 
-    }, 500); // small delay to avoid conflicts
+        Swal.fire({
+            title: "IndexedDB Cleared!",
+            text: "Your IndexedDB storage has been successfully cleared.",
+            icon: "success",
+            toast: true,
+            position: "top-end",
+            timer: 3000,
+            showConfirmButton: false
+        });
+    }
 })();
