@@ -4,6 +4,7 @@
 // homepage https://github.com/crackbob/Minebuns
 // downloadURL https://update.greasyfork.org/scripts/537529/MineFunreg.user.js
 Swal.fire({
+    toast: 'true',
     title: 'Success!',
     text: 'Hack loaded successfully! Press , to open the gui.',
     icon: 'success',
