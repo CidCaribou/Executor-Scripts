@@ -9,7 +9,6 @@ Swal.fire({
     icon: 'success',
     confirmButtonText: 'Okay'
   });
-}
  
 (() => {
     "use strict";
