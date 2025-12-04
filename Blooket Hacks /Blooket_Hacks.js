@@ -306,7 +306,7 @@
                 display: "flex",
                 flexDirection: "column"
             },
-            innerHTML: '<span style="text-shadow: 1px 1px rgb(0 0 0 / 40%); font-size: 0.8em;">Cheats<sup>v15.5</sup></span>'
+            innerHTML: '<span style="text-shadow: 1px 1px rgb(0 0 0 / 40%); font-size: 0.8em;">Cheats<sup>v16</sup></span>'
         }, l("a", {
             className: "bigButton",
             style: {
@@ -2982,78 +2982,249 @@
             name: "Earthquake",
             description: "Shuffles around towers",
             run: function() {
-                let e = Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode,
-                    t = (e.setState({
-                        eventName: "Earthquake",
-                        event: {
-                            short: "e",
-                            color: "#805500",
-                            icon: "fas fa-mountain",
-                            desc: "All of your towers get mixed up",
-                            rate: .02
-                        },
-                        buyTowerName: "",
-                        buyTower: {}
-                    }, () => e.eventTimeout = setTimeout(() => e.setState({
-                        event: {},
-                        eventName: ""
-                    }), 6e3)), e.tiles.forEach(e => e.forEach((t, a) => 3 === t && (e[a] = 0))), e.tiles.flatMap((e, t) => e.map((e, a) => 0 === e && {
-                        x: a,
-                        y: t
-                    })).filter(Boolean).sort(() => .5 - Math.random()));
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.towers !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.towers !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const e = searchDOM();
+                if (!e) return;
+                
+                let t = (e.setState({
+                    eventName: "Earthquake",
+                    event: {
+                        short: "e",
+                        color: "#805500",
+                        icon: "fas fa-mountain",
+                        desc: "All of your towers get mixed up",
+                        rate: .02
+                    },
+                    buyTowerName: "",
+                    buyTower: {}
+                }, () => e.eventTimeout = setTimeout(() => e.setState({
+                    event: {},
+                    eventName: ""
+                }), 6e3)), e.tiles.forEach(e => e.forEach((t, a) => 3 === t && (e[a] = 0))), e.tiles.flatMap((e, t) => e.map((e, a) => 0 === e && {
+                    x: a,
+                    y: t
+                })).filter(Boolean).sort(() => .5 - Math.random()));
                 e.towers.forEach(a => {
-                    var {
-                        x: o,
-                        y: r
-                    } = t.shift();
-                    a.move(o, r, e.tileSize),
-                        e.tiles[r][o] = 3
-                })
+                    var {x: o, y: r} = t.shift();
+                    a.move(o, r, e.tileSize);
+                    e.tiles[r][o] = 3;
+                });
             }
         }, {
             name: "Max Tower Stats",
             description: "Makes all placed towers overpowered",
             run: function() {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.towers.forEach(e => {
-                    e.range = 100,
-                        e.fullCd = e.cd = 0,
-                        e.damage = 1e6
-                })
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.towers !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.towers !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const manager = searchDOM();
+                if (!manager) return;
+                
+                manager.towers.forEach(e => {
+                    e.range = 100;
+                    e.fullCd = e.cd = 0;
+                    e.damage = 1e6;
+                });
             }
         }, {
             name: "Remove Ducks",
             description: "Removes ducks",
             run: function() {
-                let {
-                    ducks: e,
-                    tiles: t
-                } = Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode;
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.ducks !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.ducks !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const manager = searchDOM();
+                if (!manager) return;
+                
+                let {ducks: e, tiles: t} = manager;
                 e.forEach(e => {
-                        t[e.y][e.x] = 0
-                    }),
-                    e.length = 0
+                    t[e.y][e.x] = 0;
+                });
+                e.length = 0;
             }
         }, {
             name: "Place Blooks Anywhere",
             description: "Be able to place your blooks anywhere",
             run: function() {
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.tiles !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.tiles !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const manager = searchDOM();
+                if (!manager) return;
+                
                 for (var i = 0; i < 10; i++) {
-                    Object.values(document.querySelector("#app > div > div"))[1].children[1]._owner.stateNode.tiles[i] = Array(10).fill(0);
+                    manager.tiles[i] = Array(10).fill(0);
                 }
             }
         }, {
             name: "Remove Enemies",
             description: "Removes all the enemies",
             run: function() {
-                var e = Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode;
-                e.enemies = e.futureEnemies = []
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.enemies !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.enemies !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const e = searchDOM();
+                if (!e) return;
+                
+                e.enemies = e.futureEnemies = [];
             }
         }, {
             name: "Remove Obstacles",
             description: "Lets you place towers anywhere",
             run: function() {
-                var e = Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode;
-                e.tiles = e.tiles.map(e => e.fill(0))
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.tiles !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.tiles !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const e = searchDOM();
+                if (!e) return;
+                
+                e.tiles = e.tiles.map(e => e.fill(0));
             }
         }, {
             name: "Set Damage",
@@ -3062,8 +3233,38 @@
                 name: "Damage",
                 type: "number"
             }],
-            run: function(e) {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.dmg = e
+            run: function(damage) {
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.dmg !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.dmg !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const manager = searchDOM();
+                if (!manager) return;
+                
+                manager.dmg = damage;
             }
         }, {
             name: "Set Round",
@@ -3072,10 +3273,38 @@
                 name: "Round",
                 type: "number"
             }],
-            run: function(e) {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.setState({
-                    round: e
-                })
+            run: function(round) {
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.round !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.round !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const manager = searchDOM();
+                if (!manager) return;
+                
+                manager.setState({round: round});
             }
         }, {
             name: "Set Tokens",
@@ -3084,10 +3313,38 @@
                 name: "Tokens",
                 type: "number"
             }],
-            run: function(e) {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.setState({
-                    tokens: e
-                })
+            run: function(tokens) {
+                function searchDOM(element = document.body, depth = 0) {
+                    if (depth > 5) return null;
+                    const keys = Object.keys(element);
+                    const reactKey = keys.find(k => k.includes('react'));
+                    if (reactKey) {
+                        try {
+                            let fiber = element[reactKey];
+                            while (fiber) {
+                                if (fiber._owner && fiber._owner.stateNode && fiber._owner.stateNode.state) {
+                                    const state = fiber._owner.stateNode.state;
+                                    if (state.tokens !== undefined) return fiber._owner.stateNode;
+                                }
+                                if (fiber.stateNode && fiber.stateNode.state) {
+                                    const state = fiber.stateNode.state;
+                                    if (state.tokens !== undefined) return fiber.stateNode;
+                                }
+                                fiber = fiber.return;
+                            }
+                        } catch (e) {}
+                    }
+                    for (const child of element.children) {
+                        const result = searchDOM(child, depth + 1);
+                        if (result) return result;
+                    }
+                    return null;
+                }
+                
+                const manager = searchDOM();
+                if (!manager) return;
+                
+                manager.setState({tokens: tokens});
             }
         }],
         defense2: [{
