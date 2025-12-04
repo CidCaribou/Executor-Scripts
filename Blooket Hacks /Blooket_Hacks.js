@@ -3347,40 +3347,128 @@
                 manager.setState({tokens: tokens});
             }
         }],
-        defense2: [{
+defense2: [{
             name: "Max Tower Stats",
             description: "Makes all placed towers overpowered",
             run: function() {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.state.towers.forEach(e => {
-                    if (e.stats.dmg = 1e6, e.stats.fireRate = 50, e.stats.ghostDetect = !0, e.stats.maxTargets = 1e6, e.stats.numProjectiles &&= 100, e.stats.range = 100, e.stats.auraBuffs)
-                        for (let t in e.stats.auraBuffs)
-                            e.stats.auraBuffs[t] *= 100
-                })
+                let iframe = document.createElement('iframe');
+                document.body.append(iframe);
+                window.alert = iframe.contentWindow.alert.bind(window);
+                iframe.remove();
+
+                function withScene(callback) {
+                    if (window._SCENE && window._SCENE.sys && window._SCENE.sys.isActive()) {
+                        callback(window._SCENE);
+                        return;
+                    }
+                    let found = false;
+                    const originalUpdate = window.Phaser.Scenes.SceneManager.prototype.update;
+                    window.Phaser.Scenes.SceneManager.prototype.update = function(time, delta) {
+                        originalUpdate.call(this, time, delta);
+                        if (found) return;
+                        for (const scene of this.scenes) {
+                            if (scene.sys.isActive() && scene.sys.settings.key !== 'Boot') {
+                                window._SCENE = scene;
+                                found = true;
+                                window.Phaser.Scenes.SceneManager.prototype.update = originalUpdate;
+                                callback(scene);
+                                return;
+                            }
+                        }
+                    };
+                }
+
+                withScene((scene) => {
+                    const service = scene.towerService;
+                    if (!service || !service.towers) {
+                        alert("❌ Tower Service not found!");
+                        return;
+                    }
+
+                    const towersDict = service.towers;
+                    let totalUpgraded = 0;
+
+                    Object.keys(towersDict).forEach(typeKey => {
+                        const group = towersDict[typeKey];
+                        let towers = [];
+                        if (group.getChildren) towers = group.getChildren();
+                        else if (group.children && group.children.entries) towers = group.children.entries;
+                        else if (Array.isArray(group)) towers = group;
+
+                        towers.forEach(e => {
+                            e.cd = 0;
+                            e.fullCd = 1;
+                            
+                            if (e.stats) {
+                                e.stats.dmg = 1e6;
+                                e.stats.fireRate = 50;
+                                e.stats.ghostDetect = true;
+                                e.stats.maxTargets = 1e6;
+                                if (e.stats.numProjectiles) e.stats.numProjectiles = 100;
+                                e.stats.range = 100;
+                                if (e.stats.auraBuffs) {
+                                    for (let t in e.stats.auraBuffs) {
+                                        e.stats.auraBuffs[t] *= 100;
+                                    }
+                                }
+                            }
+                            
+                            if (e.rangeCircle) {
+                                e.rangeCircle.radius = 1000;
+                            }
+                            
+                            totalUpgraded++;
+                        });
+                    });
+
+                    if (totalUpgraded > 0) {
+                        alert(`✅ Upgraded ${totalUpgraded} towers!`);
+                    } else {
+                        alert("⚠️ No active towers found.");
+                    }
+                });
             }
         }, {
             name: "Kill Enemies",
             description: "Kills all the enemies",
             run: function() {
-                var e = Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode;
-                e.game.current.scene.scenes[0].enemyQueue.length = 0,
-                    e.game.current.scene.scenes[0].physics.world.bodies.entries.forEach(e => e?.gameObject?.receiveDamage?.(e.gameObject.hp, 1))
-            }
-        }, {
-            name: "Crash Host (Defense 2)",
-            description: "Crashes the Host's Game for Tower Defense 2 (May take a few tries)",
-            run: function() {
-                function reactHandler() {
-                    return Object.values(document.querySelector('#app>div>div'))[1].children[0]._owner;
+                function withScene(callback) {
+                    if (window._SCENE && window._SCENE.sys && window._SCENE.sys.isActive()) {
+                        callback(window._SCENE);
+                        return;
+                    }
+                    let found = false;
+                    const originalUpdate = window.Phaser.Scenes.SceneManager.prototype.update;
+                    window.Phaser.Scenes.SceneManager.prototype.update = function(time, delta) {
+                        originalUpdate.call(this, time, delta);
+                        if (found) return;
+                        for (const scene of this.scenes) {
+                            if (scene.sys.isActive() && scene.sys.settings.key !== 'Boot') {
+                                window._SCENE = scene;
+                                found = true;
+                                window.Phaser.Scenes.SceneManager.prototype.update = originalUpdate;
+                                callback(scene);
+                                return;
+                            }
+                        }
+                    };
                 }
-
-                function setv(args) {
-                    reactHandler().stateNode.props.liveGameController.setVal({
-                        path: "c/" + reactHandler().stateNode.props.client.name + "/" + args[0],
-                        val: args.slice(1, args.length).join(" ")
-                    });
-                }
-
-                setv(['d/t', 't']);
+                
+                withScene((scene) => {
+                    // Clear enemy queue
+                    if (scene.enemyService && scene.enemyService.enemyQueue) {
+                        scene.enemyService.enemyQueue.length = 0;
+                    }
+                    
+                    // Kill all enemies using takeDamage
+                    if (scene.enemyService?.enemies?.children?.entries) {
+                        scene.enemyService.enemies.children.entries.forEach(enemy => {
+                            if (enemy && enemy.hp && enemy.takeDamage) {
+                                enemy.takeDamage(enemy.hp);
+                            }
+                        });
+                    }
+                });
             }
         }, {
             name: "Set Coins",
@@ -3389,10 +3477,34 @@
                 name: "Coins",
                 type: "number"
             }],
-            run: function(e) {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.setState({
-                    coins: e
-                })
+            run: function(coins) {
+                function withScene(callback) {
+                    if (window._SCENE && window._SCENE.sys && window._SCENE.sys.isActive()) {
+                        callback(window._SCENE);
+                        return;
+                    }
+                    let found = false;
+                    const originalUpdate = window.Phaser.Scenes.SceneManager.prototype.update;
+                    window.Phaser.Scenes.SceneManager.prototype.update = function(time, delta) {
+                        originalUpdate.call(this, time, delta);
+                        if (found) return;
+                        for (const scene of this.scenes) {
+                            if (scene.sys.isActive() && scene.sys.settings.key !== 'Boot') {
+                                window._SCENE = scene;
+                                found = true;
+                                window.Phaser.Scenes.SceneManager.prototype.update = originalUpdate;
+                                callback(scene);
+                                return;
+                            }
+                        }
+                    };
+                }
+                
+                withScene((scene) => {
+                    const manager = scene.gameManager;
+                    if (!manager) return;
+                    manager.coins = coins;
+                });
             }
         }, {
             name: "Set Health",
@@ -3401,10 +3513,39 @@
                 name: "Health",
                 type: "number"
             }],
-            run: function(e) {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.setState({
-                    health: e
-                })
+            run: function(health) {
+                function withScene(callback) {
+                    if (window._SCENE && window._SCENE.sys && window._SCENE.sys.isActive()) {
+                        callback(window._SCENE);
+                        return;
+                    }
+                    let found = false;
+                    const originalUpdate = window.Phaser.Scenes.SceneManager.prototype.update;
+                    window.Phaser.Scenes.SceneManager.prototype.update = function(time, delta) {
+                        originalUpdate.call(this, time, delta);
+                        if (found) return;
+                        for (const scene of this.scenes) {
+                            if (scene.sys.isActive() && scene.sys.settings.key !== 'Boot') {
+                                window._SCENE = scene;
+                                found = true;
+                                window.Phaser.Scenes.SceneManager.prototype.update = originalUpdate;
+                                callback(scene);
+                                return;
+                            }
+                        }
+                    };
+                }
+                
+                withScene((scene) => {
+                    const manager = scene.gameManager;
+                    if (!manager) return;
+                    
+                    let healthTarget = manager;
+                    if (manager.health === undefined && scene.gameData && scene.gameData.health !== undefined) {
+                        healthTarget = scene.gameData;
+                    }
+                    healthTarget.health = health;
+                });
             }
         }, {
             name: "Set Round",
@@ -3413,10 +3554,34 @@
                 name: "Round",
                 type: "number"
             }],
-            run: function(e) {
-                Object.values(document.querySelector("body div[id] > div > div"))[1].children[0]._owner.stateNode.setState({
-                    round: e
-                })
+            run: function(round) {
+                function withScene(callback) {
+                    if (window._SCENE && window._SCENE.sys && window._SCENE.sys.isActive()) {
+                        callback(window._SCENE);
+                        return;
+                    }
+                    let found = false;
+                    const originalUpdate = window.Phaser.Scenes.SceneManager.prototype.update;
+                    window.Phaser.Scenes.SceneManager.prototype.update = function(time, delta) {
+                        originalUpdate.call(this, time, delta);
+                        if (found) return;
+                        for (const scene of this.scenes) {
+                            if (scene.sys.isActive() && scene.sys.settings.key !== 'Boot') {
+                                window._SCENE = scene;
+                                found = true;
+                                window.Phaser.Scenes.SceneManager.prototype.update = originalUpdate;
+                                callback(scene);
+                                return;
+                            }
+                        }
+                    };
+                }
+                
+                withScene((scene) => {
+                    const manager = scene.gameManager;
+                    if (!manager) return;
+                    manager.round = round;
+                });
             }
         }],
         dinos: [{
