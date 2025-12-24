@@ -16,7 +16,7 @@
                     Swal.fire({
                         icon:'success',
                         title:'Hook successful',
-                        text:'Scene was hooked successfully after a failed attempt.'
+                        text:'Scene was hooked successfully. The ev.io hacks will work now.'
                     });
                     localStorage.setItem('ev.io-hook-failed','false');
                 }
