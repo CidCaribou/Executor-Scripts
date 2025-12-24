@@ -1,5 +1,5 @@
 javascript:(function(){
-   function loadSwal(callback) {
+    function loadSwal(callback) {
         if (window.Swal) {
             callback();
         } else {
@@ -18,7 +18,6 @@ javascript:(function(){
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
-            timer: '1000000000000',
             confirmButtonText: "Yes, clear cache!",
             cancelButtonText: "No, keep my cache"
         }).then((result) => {
@@ -41,4 +40,6 @@ javascript:(function(){
 
         Swal.fire("Cache Cleared!", "Your browser cache has been successfully cleared.", "success");
     }
+
+    loadSwal(showConfirmation);
 })();
