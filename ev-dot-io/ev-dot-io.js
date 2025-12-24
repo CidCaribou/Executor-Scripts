@@ -33,7 +33,7 @@ if (!worldScene) {
     Swal.fire({
   icon:'error',
   title:'Hook not initialized',
-  html:'If you are using the <b>bookmarklet</b> version, refresh the page and open Executor as fast as possible.<br><br>If you are using the <b>Tampermonkey</b> or <b>Extension</b> version, please report this bug on the Discord or GitHub.'
+  html:'If you are using the <b>bookmarklet</b> version, refresh the page and open Executor as fast as possible.<br><br>If you are using the <b>Tampermonkey</b> or <b>Extension</b> version, please report this bug on the Discord or GitHub or try again by refreshing the page.'
 });
     WeakMap.prototype.set = new Proxy(WeakMap.prototype.set, {
         apply(target, thisArgs, [object]) {
