@@ -1,10 +1,14 @@
 javascript:(function(){
-    let swalScript = document.createElement('script');
-    swalScript.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
-    swalScript.onload = function() {
-        showConfirmation();
-    };
-    document.head.appendChild(swalScript);
+   function loadSwal(callback) {
+        if (window.Swal) {
+            callback();
+        } else {
+            let swalScript = document.createElement('script');
+            swalScript.src = "https://cdn.jsdelivr.net/npm/sweetalert2@11";
+            swalScript.onload = callback;
+            document.head.appendChild(swalScript);
+        }
+    }
 
     function showConfirmation() {
         Swal.fire({
