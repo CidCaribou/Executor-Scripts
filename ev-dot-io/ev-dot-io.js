@@ -1,3 +1,9 @@
+if(!window.Swal){
+  const s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/sweetalert2@11';
+  document.head.appendChild(s);
+}
+
 let espEnabled = true;
 let aimbotEnabled = true;
 let espSize = 1;
@@ -23,7 +29,12 @@ const material = new THREE.RawShaderMaterial({
 let worldScene = window.worldScene || null;
 
 if (!worldScene) {
-    console.log('[ESP] Scene not found, setting up hook...');
+    localStorage.setItem('ev.io-hook-failed','true');
+    Swal.fire({
+  icon:'error',
+  title:'Hook not initialized',
+  html:'If you are using the <b>bookmarklet</b> version, refresh the page and open Executor as fast as possible.<br><br>If you are using the <b>Tampermonkey</b> or <b>Extension</b> version, please report this bug on the Discord or GitHub.'
+});
     WeakMap.prototype.set = new Proxy(WeakMap.prototype.set, {
         apply(target, thisArgs, [object]) {
             if (object.type === 'Scene' && object.children.length > 4) {
