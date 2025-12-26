@@ -62,7 +62,7 @@ header.appendChild(fullscreenBtn);
 header.appendChild(title);
 
 const iframe = document.createElement('iframe');
-iframe.src = 'https://blooketbot.glitch.me';
+iframe.src = 'https://blooketbot.schoolcheats.net';
 iframe.style.width = '100%';
 iframe.style.height = 'calc(100% - 30px)';
 iframe.style.border = 'none';
