@@ -1,7 +1,6 @@
 alert("May Not Work On Some Websites\n\nLevel 2 Executor Required")
-document.body.innerHTML = ''; // Clear the document for demo purposes
+document.body.innerHTML = ''; 
 
-// Define the custom element for iframe bypass
 customElements.define('x-frame-bypass', class extends HTMLIFrameElement {
     static get observedAttributes() {
         return ['src'];
@@ -92,7 +91,6 @@ customElements.define('x-frame-bypass', class extends HTMLIFrameElement {
     }
 }, { extends: 'iframe' });
 
-// Create a wrapper div
 const wrapper = document.createElement('div');
 wrapper.style.position = 'absolute';
 wrapper.style.top = '100px';
@@ -105,7 +103,6 @@ wrapper.style.backgroundColor = '#f9f9f9';
 wrapper.style.zIndex = '1000';
 document.body.appendChild(wrapper);
 
-// Add a title bar
 const titleBar = document.createElement('div');
 titleBar.style.display = 'flex';
 titleBar.style.alignItems = 'center';
@@ -117,11 +114,10 @@ titleBar.style.borderTopLeftRadius = '8px';
 titleBar.style.borderTopRightRadius = '8px';
 wrapper.appendChild(titleBar);
 
-// Add macOS-style traffic light buttons
 const buttonContainer = document.createElement('div');
 buttonContainer.style.display = 'flex';
 buttonContainer.style.gap = '5px';
-buttonContainer.style.marginRight = '10px'; // Spacing between buttons and title
+buttonContainer.style.marginRight = '10px';
 titleBar.appendChild(buttonContainer);
 
 const createMacButton = (color, action) => {
@@ -135,31 +131,29 @@ const createMacButton = (color, action) => {
     return button;
 };
 
-const closeButton = createMacButton('#ff605c', () => wrapper.remove()); // Red button
+const closeButton = createMacButton('#ff605c', () => wrapper.remove()); 
 const minimizeButton = createMacButton('#ffbd44', () => {
-    iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none'; // Yellow button
+    iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none'; 
 });
 const fullscreenButton = createMacButton('#00ca4e', () => {
     if (!document.fullscreenElement) wrapper.requestFullscreen();
     else document.exitFullscreen();
-}); // Green button
+}); 
 
 buttonContainer.appendChild(closeButton);
 buttonContainer.appendChild(minimizeButton);
 buttonContainer.appendChild(fullscreenButton);
 
-// Add title
 const title = document.createElement('div');
 title.textContent = 'Snake Game';
-title.style.flexGrow = '1'; // Fills available space
+title.style.flexGrow = '1'; 
 title.style.fontSize = '16px';
 title.style.fontWeight = 'bold';
 title.style.color = '#fff';
 title.style.textAlign = 'center';
-title.style.pointerEvents = 'none'; // Prevent dragging from the title
+title.style.pointerEvents = 'none'; 
 titleBar.appendChild(title);
 
-// Add iframe to the wrapper
 const iframe = document.createElement('iframe', { is: 'x-frame-bypass' });
 iframe.src = 'https://www.google.com/fbx?fbx=snake_arcade';
 iframe.style.width = '100%';
@@ -167,7 +161,6 @@ iframe.style.height = '600px';
 iframe.style.border = 'none';
 wrapper.appendChild(iframe);
 
-// Dragging functionality for the wrapper
 let isDragging = false;
 let offsetX, offsetY;
 
